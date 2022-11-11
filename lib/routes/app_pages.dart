@@ -1,10 +1,8 @@
 import 'package:get/get.dart';
-import 'package:startupapplication/views/waiter/order/bindings/order_binding.dart';
-import 'package:startupapplication/views/waiter/order/views/order_view.dart';
 
-import '../views/homePage.dart';
 import '../views/bar/bar_order/bindings/bar_order_binding.dart';
 import '../views/bar/bar_order/views/bar_order_view.dart';
+import '../views/homePage.dart';
 import '../views/kitchen/kitchen_order/bindings/kitchen_order_binding.dart';
 import '../views/kitchen/kitchen_order/views/kitchen_order_view.dart';
 import '../views/login/bindings/login_binding.dart';
@@ -12,8 +10,12 @@ import '../views/login/views/login_view.dart';
 import '../views/splash_screen.dart';
 import '../views/waiter/menu/bindings/menu_binding.dart';
 import '../views/waiter/menu/views/menu_view.dart';
+import '../views/waiter/order/bindings/order_binding.dart';
+import '../views/waiter/order/views/order_view.dart';
 import '../views/waiter/table/bindings/table_binding.dart';
 import '../views/waiter/table/views/table_view.dart';
+import '../views/waiter/waiter_order/bindings/waiter_order_binding.dart';
+import '../views/waiter/waiter_order/views/waiter_order_view.dart';
 
 part 'app_routes.dart';
 
@@ -61,6 +63,11 @@ class AppPages {
       name: _Paths.BAR_ORDER,
       page: () => BarOrderView(),
       binding: BarOrderBinding(),
+    ),
+    GetPage(
+      name: _Paths.WAITER_ORDER,
+      page: () => const WaiterOrderView(),
+      binding: WaiterOrderBinding(),
     ),
   ];
 }

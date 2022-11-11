@@ -16,8 +16,10 @@ class KitchenOrderController extends GetxController {
       isLoading(true);
       await controller.allOrder(token: getSharedContoller.token).then((value) {
         value != null
-            ? orders =
-                value.where((element) => element.type == 'Kitchen').toList()
+            ? orders = value
+                .where((element) =>
+                    element.type == 'Kitchen' && element.status != 'serving')
+                .toList()
             : null;
 
         isLoading(false);

@@ -31,6 +31,7 @@ class _TableViewState extends State<TableView> {
           leading: Container(),
           backgroundColor: Theme.of(context).backgroundColor,
           title: const Text('ATS POS MOBILE'),
+          centerTitle: true,
           actions: [
             //qr code
             IconButton(
@@ -56,67 +57,138 @@ class _TableViewState extends State<TableView> {
           onRefresh: () async {
             tableController.getTables();
           },
-          child: Obx(
-            () => tableController.isLoading.value
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : tableController.tables.isEmpty
+          child: Stack(
+            children: [
+              Obx(
+                () => tableController.isLoading.value
                     ? Center(
-                        child: Text("No Tables"),
+                        child: CircularProgressIndicator(),
                       )
-                    : Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    crossAxisSpacing: 10,
-                                    mainAxisSpacing: 10),
-                            itemCount: tableController.tables.length,
-                            itemBuilder: (context, index) {
-                              var table = tableController.tables[index]!;
-                              return tableController.tables.length == 0
-                                  ? Center(child: Text('No Tables'))
-                                  : Card(
-                                      color: table.status == 'open'
-                                          ? Colors.green
-                                          : Colors.red,
-                                      child: InkWell(
-                                        onTap: () {
-                                          Get.toNamed(Routes.MENU, arguments: [
-                                            table.id,
-                                            table.name
-                                          ]);
-                                        },
-                                        onLongPress: (() {
-                                          showSwapDialog(
-                                              table, tableController.tables);
-                                        }),
-                                        child: Center(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.table_restaurant_rounded,
-                                                size: 50,
-                                                color: Color.fromRGBO(
-                                                    255, 255, 255, 1),
+                    : tableController.tables.isEmpty
+                        ? Center(
+                            child: Text("No Tables"),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GridView.builder(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        crossAxisSpacing: 10,
+                                        mainAxisSpacing: 10),
+                                itemCount: tableController.tables.length,
+                                itemBuilder: (context, index) {
+                                  var table = tableController.tables[index]!;
+                                  return tableController.tables.length == 0
+                                      ? Center(child: Text('No Tables'))
+                                      : Card(
+                                          color: table.status == 'open'
+                                              ? Colors.green
+                                              : Colors.red,
+                                          child: InkWell(
+                                            onTap: () {
+                                              Get.toNamed(Routes.MENU,
+                                                  arguments: [
+                                                    table.id,
+                                                    table.name
+                                                  ]);
+                                            },
+                                            onLongPress: (() {
+                                              showSwapDialog(table,
+                                                  tableController.tables);
+                                            }),
+                                            child: Center(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons
+                                                        .table_restaurant_rounded,
+                                                    size: 50,
+                                                    color: Color.fromRGBO(
+                                                        255, 255, 255, 1),
+                                                  ),
+                                                  Text(
+                                                    table.name!,
+                                                    style: const TextStyle(
+                                                        fontSize: 20,
+                                                        color: Colors.white),
+                                                  ),
+                                                ],
                                               ),
-                                              Text(
-                                                table.name!,
-                                                style: const TextStyle(
-                                                    fontSize: 20,
-                                                    color: Colors.white),
-                                              ),
-                                            ],
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    );
-                            }),
-                      ),
+                                        );
+                                }),
+                          ),
+              ),
+              Positioned(
+                bottom: 2,
+                child: Row(
+                  children: [
+                    Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.08,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).backgroundColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              children: [
+                                IconButton(
+                                    onPressed: (() {}),
+                                    icon: Icon(
+                                      Icons.table_chart,
+                                      color: Theme.of(context).primaryColor,
+                                    )),
+                                Text(
+                                  'POS',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                )
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                IconButton(
+                                    onPressed: (() {
+                                      Get.toNamed(Routes.WAITER_ORDER);
+                                    }),
+                                    icon: Icon(
+                                      Icons.shopify_outlined,
+                                      color: Theme.of(context).primaryColor,
+                                    )),
+                                Text('Orders',
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                    ))
+                              ],
+                            ),
+                            // Column(
+                            //   children: [
+                            //     IconButton(
+                            //         onPressed: (() {}),
+                            //         icon: Icon(
+                            //           Icons.qr_code,
+                            //           color: Theme.of(context).primaryColor,
+                            //         )),
+                            //     Text('Check Banlance',
+                            //         style: TextStyle(
+                            //           color: Theme.of(context).primaryColor,
+                            //         ))
+                            //   ],
+                            // ),
+                          ],
+                        )),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),

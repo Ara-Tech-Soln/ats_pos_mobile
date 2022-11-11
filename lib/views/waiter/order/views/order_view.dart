@@ -47,20 +47,32 @@ class _OrderViewState extends State<OrderView> {
                     itemCount: orderController.orders.length,
                     itemBuilder: (context, index) {
                       return Card(
+                        color: orderController.orders[index].status == 'hold'
+                            ? Colors.red
+                            : orderController.orders[index].status ==
+                                    'preparing'
+                                ? Colors.amber
+                                : Colors.green,
                         child: ListTile(
                           leading: ClipOval(
                             child: Image.network(
                               orderController.orders[index].image!,
                               height: 60,
-                              width: 50,
+                              width: 60,
                               fit: BoxFit.cover,
                             ),
                           ),
-                          title: Text(orderController.orders[index].name!
-                                  .toUpperCase() +
-                              ' x ' +
-                              orderController.orders[index].quantity
-                                  .toString()),
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(orderController.orders[index].name!
+                                      .toUpperCase() +
+                                  ' x ' +
+                                  orderController.orders[index].quantity
+                                      .toString()),
+                              Text(orderController.orders[index].group!)
+                            ],
+                          ),
                           subtitle: Row(
                             children: [
                               //progress bar
@@ -78,7 +90,7 @@ class _OrderViewState extends State<OrderView> {
                                         backgroundColor: Colors.grey,
                                         valueColor: AlwaysStoppedAnimation<
                                                 Color>(
-                                            Color.fromARGB(255, 144, 19, 202)),
+                                            Color.fromARGB(255, 125, 29, 173)),
                                       ),
                                       Row(
                                         mainAxisAlignment:
@@ -100,14 +112,22 @@ class _OrderViewState extends State<OrderView> {
                                           ),
                                         ],
                                       ),
-                                      Text('Order Created: ' +
-                                          DateFormat('dd-MM-yyyy hh:mm a')
-                                              .format(orderController
-                                                  .orders[index].createdAt!)),
-                                      Text('Order Updated: ' +
-                                          DateFormat('dd-MM-yyyy hh:mm a')
-                                              .format(orderController
-                                                  .orders[index].updatedAt!)),
+                                      Text(
+                                          'Order Created: ' +
+                                              DateFormat('dd-MM-yyyy hh:mm a')
+                                                  .format(orderController
+                                                      .orders[index]
+                                                      .createdAt!),
+                                          style:
+                                              TextStyle(color: Colors.black)),
+                                      Text(
+                                          'Order Updated: ' +
+                                              DateFormat('dd-MM-yyyy hh:mm a')
+                                                  .format(orderController
+                                                      .orders[index]
+                                                      .updatedAt!),
+                                          style:
+                                              TextStyle(color: Colors.black)),
                                     ],
                                   ),
                                 ),
