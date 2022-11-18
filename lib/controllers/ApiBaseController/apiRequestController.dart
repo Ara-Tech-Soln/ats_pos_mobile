@@ -11,10 +11,11 @@ import 'package:startupapplication/models/User.dart';
 import 'package:startupapplication/services/base_client.dart';
 
 class ApiRequestController with BaseController {
-  static String baseUrl = 'http://192.168.1.150:8000';
+  // static String baseUrl = 'http://192.168.100.185';
+  static String baseUrl = 'http://vusechho.com';
+  // static String baseUrl = 'http://192.168.1.150';
   static String verison = '/api/';
   static String apiBaseUrl = baseUrl + verison;
-  static String imageBaseUrl = baseUrl + '/storage/';
 
   login({
     required String email,
@@ -35,6 +36,24 @@ class ApiRequestController with BaseController {
     } else {
       print(response);
       return User.fromJson(response);
+    }
+  }
+
+  updateDeviceToken({String? token, String? deviceToken}) async {
+    var endPoint = "update-device-token?api_token=$token";
+    var body = jsonEncode({
+      "device_token": deviceToken,
+    });
+    var headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+    var response = await BaseClient().post(apiBaseUrl, endPoint, headers, body);
+    if (response == null) {
+      return response;
+    } else {
+      print(response);
+      return response;
     }
   }
 

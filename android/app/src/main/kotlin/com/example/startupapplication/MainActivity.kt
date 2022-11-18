@@ -1,4 +1,4 @@
-package com.example.startupapplication
+package com.aratech.restropos
 
 import io.flutter.embedding.android.FlutterActivity
 

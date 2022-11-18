@@ -1,0 +1,31 @@
+{
+    "project_info": {
+        "project_number": "335573497815",
+        "project_id": "ats-pos-2b812",
+        "storage_bucket": "ats-pos-2b812.appspot.com"
+    },
+    "client": [{
+        "client_info": {
+            "mobilesdk_app_id": "1:335573497815:android:eac24e7168c14c76c97d92",
+            "android_client_info": {
+                "package_name": "com.aratech.restropos"
+            }
+        },
+        "oauth_client": [{
+            "client_id": "335573497815-cfl9jeffia6rfi2p1ie3810dhlvaf5b9.apps.googleusercontent.com",
+            "client_type": 3
+        }],
+        "api_key": [{
+            "current_key": "AIzaSyDVlc7D0ljGmtOyKY2XcwDWq1XQx4m9vY8"
+        }],
+        "services": {
+            "appinvite_service": {
+                "other_platform_oauth_client": [{
+                    "client_id": "335573497815-cfl9jeffia6rfi2p1ie3810dhlvaf5b9.apps.googleusercontent.com",
+                    "client_type": 3
+                }]
+            }
+        }
+    }],
+    "configuration_version": "1"
+}

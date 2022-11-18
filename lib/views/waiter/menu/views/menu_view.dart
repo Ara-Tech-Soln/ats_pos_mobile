@@ -63,21 +63,32 @@ class _MenuViewState extends State<MenuView> {
                               child: Text('No Items in Cart'),
                             )
                           : DataTable(
-                              showBottomBorder: true,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade100,
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              columnSpacing: 40,
+                              dataRowColor:
+                                  MaterialStateProperty.all(Colors.white),
+                              dataTextStyle: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                              ),
                               border: TableBorder.all(),
                               headingRowColor: MaterialStateColor.resolveWith(
-                                  (states) => Colors.grey.shade400),
+                                  (states) => Colors.grey.shade800),
+                              headingTextStyle: TextStyle(color: Colors.white),
                               columns: const [
-                                DataColumn(label: Text('Batch')),
                                 DataColumn(label: Text('Name')),
                                 DataColumn(label: Text('Quantity')),
+                                DataColumn(label: Text('Total')),
                               ],
                               rows: List.generate(
                                 cartController.carts.length,
                                 (index) => DataRow(
                                   cells: [
-                                    DataCell(Text(
-                                        cartController.carts[index]!.group!)),
                                     DataCell(Text(cartController
                                         .carts[index]!.menu!.name!)),
                                     DataCell(Row(
@@ -98,6 +109,7 @@ class _MenuViewState extends State<MenuView> {
                                           },
                                           icon: const Icon(
                                             Icons.remove,
+                                            size: 15,
                                             color: Colors.amber,
                                           ),
                                         ),
@@ -219,6 +231,16 @@ class _MenuViewState extends State<MenuView> {
                                         ),
                                       ],
                                     )),
+                                    DataCell(
+                                      Container(
+                                        child: Text(
+                                          'RS.${(cartController.carts[index]!.menu!.price! * cartController.carts[index]!.quantity!).toStringAsFixed(2)}',
+                                          style: const TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),
@@ -259,8 +281,8 @@ class _MenuViewState extends State<MenuView> {
                             ),
                           ),
                           InkWell(
-                            onTap: (() async {
-                              await cartController.holdCart(tableId);
+                            onTap: (() {
+                              cartController.holdCart(tableId);
                             }),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -316,7 +338,7 @@ class _MenuViewState extends State<MenuView> {
                           : GridView.builder(
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
+                                      crossAxisCount: 4,
                                       childAspectRatio: 1.0,
                                       crossAxisSpacing: 10,
                                       mainAxisSpacing: 10),
@@ -329,11 +351,11 @@ class _MenuViewState extends State<MenuView> {
                                       menuController.menus[index]!.id!,
                                     );
                                     await cartController.getCart(tableId);
+                                    setState(() {});
                                   },
                                   child: GridTile(
                                     child: Image.network(
-                                      ApiRequestController.imageBaseUrl +
-                                          menuController.menus[index]!.image!,
+                                      menuController.menus[index]!.image!,
                                       fit: BoxFit.cover,
                                     ),
                                     footer: GridTileBar(

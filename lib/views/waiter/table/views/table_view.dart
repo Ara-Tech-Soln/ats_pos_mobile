@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:startupapplication/controllers/getSharedData.dart';
+import 'package:startupapplication/controllers/pushNotificationController.dart';
+import 'package:startupapplication/controllers/pusher_controller.dart';
 import 'package:startupapplication/helpers/functions.dart';
 import 'package:startupapplication/routes/app_pages.dart';
 import 'package:startupapplication/views/waiter/table/controllers/table_controller.dart';
@@ -13,6 +15,9 @@ class TableView extends StatefulWidget {
 }
 
 class _TableViewState extends State<TableView> {
+  NotificationController notificationController =
+      Get.put(NotificationController());
+  PusherController pusherController = Get.find();
   TableController tableController = Get.find();
   GetSharedContoller getSharedController = Get.find();
 
@@ -57,19 +62,20 @@ class _TableViewState extends State<TableView> {
           onRefresh: () async {
             tableController.getTables();
           },
-          child: Stack(
-            children: [
-              Obx(
-                () => tableController.isLoading.value
-                    ? Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : tableController.tables.isEmpty
-                        ? Center(
-                            child: Text("No Tables"),
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Obx(
+              () => tableController.isLoading.value
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : tableController.tables.isEmpty
+                      ? Center(
+                          child: Text("No Tables"),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
                             child: GridView.builder(
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
@@ -122,74 +128,17 @@ class _TableViewState extends State<TableView> {
                                         );
                                 }),
                           ),
-              ),
-              Positioned(
-                bottom: 2,
-                child: Row(
-                  children: [
-                    Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.08,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).backgroundColor,
-                          borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              children: [
-                                IconButton(
-                                    onPressed: (() {}),
-                                    icon: Icon(
-                                      Icons.table_chart,
-                                      color: Theme.of(context).primaryColor,
-                                    )),
-                                Text(
-                                  'POS',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                )
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                IconButton(
-                                    onPressed: (() {
-                                      Get.toNamed(Routes.WAITER_ORDER);
-                                    }),
-                                    icon: Icon(
-                                      Icons.shopify_outlined,
-                                      color: Theme.of(context).primaryColor,
-                                    )),
-                                Text('Orders',
-                                    style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                    ))
-                              ],
-                            ),
-                            // Column(
-                            //   children: [
-                            //     IconButton(
-                            //         onPressed: (() {}),
-                            //         icon: Icon(
-                            //           Icons.qr_code,
-                            //           color: Theme.of(context).primaryColor,
-                            //         )),
-                            //     Text('Check Banlance',
-                            //         style: TextStyle(
-                            //           color: Theme.of(context).primaryColor,
-                            //         ))
-                            //   ],
-                            // ),
-                          ],
-                        )),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Get.toNamed(Routes.WAITER_ORDER);
+          },
+          icon: const Icon(Icons.restaurant_menu),
+          label: const Text('View Orders'),
+          backgroundColor: Theme.of(context).backgroundColor,
         ),
       ),
     );

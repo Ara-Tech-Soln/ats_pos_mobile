@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:startupapplication/controllers/pushNotificationController.dart';
 import 'package:startupapplication/helpers/functions.dart';
 import 'package:startupapplication/routes/app_pages.dart';
 import 'package:startupapplication/views/bar/bar_order/controllers/bar_order_controller.dart';
@@ -13,6 +14,8 @@ class BarOrderView extends StatefulWidget {
 }
 
 class _BarOrderViewState extends State<BarOrderView> {
+  NotificationController notificationController =
+      Get.put(NotificationController());
   BarOrderController barOrderController = Get.find();
   @override
   void initState() {
@@ -63,13 +66,6 @@ class _BarOrderViewState extends State<BarOrderView> {
                       itemCount: barOrderController.orders.length,
                       itemBuilder: (context, index) {
                         return Card(
-                          color:
-                              barOrderController.orders[index].status == "hold"
-                                  ? Colors.red[300]
-                                  : barOrderController.orders[index].status ==
-                                          "preparing"
-                                      ? Colors.amber
-                                      : Colors.green[300],
                           child: ListTile(
                             trailing: IconButton(
                               iconSize: 35,
@@ -187,9 +183,21 @@ class _BarOrderViewState extends State<BarOrderView> {
                                             Text(
                                               "Status: " +
                                                   barOrderController
-                                                      .orders[index].status!,
+                                                      .orders[index].status!
+                                                      .toUpperCase(),
                                               style: TextStyle(
-                                                  color: Colors.black),
+                                                color: barOrderController
+                                                            .orders[index]
+                                                            .status ==
+                                                        "hold"
+                                                    ? Colors.red
+                                                    : barOrderController
+                                                                .orders[index]
+                                                                .status ==
+                                                            "preparing"
+                                                        ? Colors.amber
+                                                        : Colors.green,
+                                              ),
                                             ),
                                           ],
                                         ),

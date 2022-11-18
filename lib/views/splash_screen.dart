@@ -50,25 +50,30 @@ class SplashScreenState extends State<SplashScreen> {
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
         ),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.asset(
-                'images/logo.png',
-                fit: BoxFit.cover,
-                height: 150,
-                width: 150,
-              ),
-              SizedBox(height: 50),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
-                child: LinearProgressIndicator(),
-              ),
-            ],
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          color: Colors.red,
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset(
+                  'images/logo.png',
+                  fit: BoxFit.cover,
+                  height: 150,
+                  width: 150,
+                ),
+                SizedBox(height: 50),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 25.0, vertical: 10),
+                  child: LinearProgressIndicator(),
+                ),
+              ],
+            ),
           ),
         ),
       ),

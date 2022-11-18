@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:startupapplication/controllers/pushNotificationController.dart';
 import 'package:startupapplication/helpers/functions.dart';
 import 'package:startupapplication/routes/app_pages.dart';
 import 'package:startupapplication/views/kitchen/kitchen_order/controllers/kitchen_order_controller.dart';
@@ -14,6 +15,8 @@ class KitchenOrderView extends StatefulWidget {
 }
 
 class _KitchenOrderViewState extends State<KitchenOrderView> {
+  NotificationController notificationController =
+      Get.put(NotificationController());
   KitchenOrderController kitchenOrderController = Get.find();
   @override
   void initState() {
@@ -64,13 +67,6 @@ class _KitchenOrderViewState extends State<KitchenOrderView> {
                       itemCount: kitchenOrderController.orders.length,
                       itemBuilder: (context, index) {
                         return Card(
-                          color: kitchenOrderController.orders[index].status ==
-                                  "hold"
-                              ? Colors.red[300]
-                              : kitchenOrderController.orders[index].status ==
-                                      "preparing"
-                                  ? Colors.amber
-                                  : Colors.green[300],
                           child: ListTile(
                             trailing: IconButton(
                               iconSize: 35,
@@ -190,9 +186,21 @@ class _KitchenOrderViewState extends State<KitchenOrderView> {
                                             Text(
                                               "Status: " +
                                                   kitchenOrderController
-                                                      .orders[index].status!,
+                                                      .orders[index].status!
+                                                      .toUpperCase(),
                                               style: TextStyle(
-                                                  color: Colors.black),
+                                                color: kitchenOrderController
+                                                            .orders[index]
+                                                            .status ==
+                                                        "hold"
+                                                    ? Colors.red
+                                                    : kitchenOrderController
+                                                                .orders[index]
+                                                                .status ==
+                                                            "preparing"
+                                                        ? Colors.amber
+                                                        : Colors.green,
+                                              ),
                                             ),
                                           ],
                                         ),

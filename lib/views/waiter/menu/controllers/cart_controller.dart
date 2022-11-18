@@ -16,6 +16,7 @@ class CartController extends GetxController {
   var orders;
   var _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   Random _rnd = Random();
+  var total;
 
   String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
       length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
@@ -27,6 +28,7 @@ class CartController extends GetxController {
           .getCart(table_id: table_id, token: getSharedContoller.token)
           .then((value) {
         value != null ? carts = value : null;
+
         isCartLoading(false);
       });
     } catch (e) {
@@ -42,6 +44,7 @@ class CartController extends GetxController {
       var cart = carts.firstWhere((element) => element!.menuId == menu_id);
       if (cart != null) {
         changeQty(table_id, menu_id, cart.group, cart.quantity! + 1);
+        await getCart(table_id);
       }
     } catch (e) {
       try {
@@ -55,10 +58,12 @@ class CartController extends GetxController {
                         ? getRandomString(5).toUpperCase()
                         : carts[0]!.group,
                 token: getSharedContoller.token)
-            .then((value) {
+            .then((value) async {
+          await getCart(table_id);
           isLoading(false);
         });
       } catch (e) {
+        getCart(table_id);
         print(e);
       } finally {
         isLoading(false);
@@ -139,9 +144,11 @@ class CartController extends GetxController {
       isLoading(true);
       await controller
           .holdCart(table_id: table_id, token: getSharedContoller.token)
-          .then((value) async {
+          .then((value) {
+        print('hold process');
+        getCart(table_id);
+
         HelperFunctions.showToast("Cart is on hold now");
-        await getCart(table_id);
         isLoading(false);
       });
     } catch (e) {

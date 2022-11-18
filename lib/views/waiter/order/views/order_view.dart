@@ -47,12 +47,6 @@ class _OrderViewState extends State<OrderView> {
                     itemCount: orderController.orders.length,
                     itemBuilder: (context, index) {
                       return Card(
-                        color: orderController.orders[index].status == 'hold'
-                            ? Colors.red
-                            : orderController.orders[index].status ==
-                                    'preparing'
-                                ? Colors.amber
-                                : Colors.green,
                         child: ListTile(
                           leading: ClipOval(
                             child: Image.network(
@@ -106,9 +100,21 @@ class _OrderViewState extends State<OrderView> {
                                           Text(
                                             "Status: " +
                                                 orderController
-                                                    .orders[index].status!,
-                                            style:
-                                                TextStyle(color: Colors.black),
+                                                    .orders[index].status!
+                                                    .toUpperCase(),
+                                            style: TextStyle(
+                                              color: orderController
+                                                          .orders[index]
+                                                          .status ==
+                                                      'hold'
+                                                  ? Colors.red
+                                                  : orderController
+                                                              .orders[index]
+                                                              .status ==
+                                                          'preparing'
+                                                      ? Colors.amber
+                                                      : Colors.green,
+                                            ),
                                           ),
                                         ],
                                       ),

@@ -38,7 +38,7 @@ class App {
 
 class Colors {
   Color mainColor(double opacity) {
-    return Color.fromARGB(255, 175, 22, 22).withOpacity(opacity);
+    return Color.fromARGB(249, 228, 27, 27).withOpacity(opacity);
   }
 
   Color secondColor(double opacity) {
