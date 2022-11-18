@@ -63,6 +63,13 @@ class _WaiterOrderViewState extends State<WaiterOrderView> {
                       itemCount: waiterOrderController.orders.length,
                       itemBuilder: (context, index) {
                         return Card(
+                          color: waiterOrderController.orders[index].status ==
+                                  "hold"
+                              ? Colors.red
+                              : waiterOrderController.orders[index].status ==
+                                      "preparing"
+                                  ? Colors.amber
+                                  : Colors.green,
                           child: ListTile(
                             leading: ClipOval(
                               child: Image.network(
@@ -132,17 +139,7 @@ class _WaiterOrderViewState extends State<WaiterOrderView> {
                                                       .orders[index].status!
                                                       .toUpperCase(),
                                               style: TextStyle(
-                                                color: waiterOrderController
-                                                            .orders[index]
-                                                            .status ==
-                                                        "hold"
-                                                    ? Colors.red
-                                                    : waiterOrderController
-                                                                .orders[index]
-                                                                .status ==
-                                                            "preparing"
-                                                        ? Colors.amber
-                                                        : Colors.green,
+                                                color: Colors.black,
                                               ),
                                             ),
                                           ],

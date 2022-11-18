@@ -67,6 +67,13 @@ class _KitchenOrderViewState extends State<KitchenOrderView> {
                       itemCount: kitchenOrderController.orders.length,
                       itemBuilder: (context, index) {
                         return Card(
+                          color: kitchenOrderController.orders[index].status ==
+                                  "hold"
+                              ? Colors.red
+                              : kitchenOrderController.orders[index].status ==
+                                      "preparing"
+                                  ? Colors.amber
+                                  : Colors.green,
                           child: ListTile(
                             trailing: IconButton(
                               iconSize: 35,
@@ -189,18 +196,7 @@ class _KitchenOrderViewState extends State<KitchenOrderView> {
                                                       .orders[index].status!
                                                       .toUpperCase(),
                                               style: TextStyle(
-                                                color: kitchenOrderController
-                                                            .orders[index]
-                                                            .status ==
-                                                        "hold"
-                                                    ? Colors.red
-                                                    : kitchenOrderController
-                                                                .orders[index]
-                                                                .status ==
-                                                            "preparing"
-                                                        ? Colors.amber
-                                                        : Colors.green,
-                                              ),
+                                                  color: Colors.black),
                                             ),
                                           ],
                                         ),
