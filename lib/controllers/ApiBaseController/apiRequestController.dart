@@ -243,22 +243,25 @@ class ApiRequestController with BaseController {
     }
   }
 
-  holdCart({String? table_id, String? token}) async {
-    var endPoint = "carts-hold?table_id=" + table_id! + "&api_token=" + token!;
+  holdCart({dynamic cart, String? token}) async {
+    var endPoint = "carts-hold?api_token=" + token!;
 
     var headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     };
+
+    var body = jsonEncode({"cart": cart.map((x) => x.toMap()).toList()});
+
     var response = await BaseClient()
-        .get(apiBaseUrl, endPoint, headers)
+        .post(apiBaseUrl, endPoint, headers, body)
         .catchError(handelError);
 
     if (response == null) {
-      return;
+      return response;
     } else {
       print(response);
-      return;
+      return response;
     }
   }
 

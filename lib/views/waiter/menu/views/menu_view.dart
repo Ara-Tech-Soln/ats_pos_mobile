@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:startupapplication/controllers/ApiBaseController/apiRequestController.dart';
 import 'package:startupapplication/routes/app_pages.dart';
 import 'package:startupapplication/views/waiter/menu/controllers/cart_controller.dart';
 import 'package:startupapplication/views/waiter/menu/controllers/menu_controller.dart';
+import 'package:startupapplication/views/waiter/table/controllers/table_controller.dart';
 
 class MenuView extends StatefulWidget {
   const MenuView({Key? key}) : super(key: key);
@@ -19,9 +19,10 @@ class _MenuViewState extends State<MenuView> {
 
   MenuController menuController = Get.find();
   CartController cartController = Get.find();
+  TableController tableController = Get.find();
   @override
   void initState() {
-    cartController.getCart(tableId);
+    //cartController.getCart(tableId);
     menuController.getMenus();
     super.initState();
   }
@@ -49,263 +50,242 @@ class _MenuViewState extends State<MenuView> {
       body: RefreshIndicator(
         onRefresh: () async {
           menuController.getMenus();
-          cartController.getCart(tableId);
+          //cartController.getCart(tableId);
         },
         child: Column(
           children: [
             SingleChildScrollView(
               child: Container(
-                child: Obx(
-                  (() => cartController.isCartLoading.value
-                      ? Text('Loading...')
-                      : cartController.carts.isEmpty
-                          ? Center(
-                              child: Text('No Items in Cart'),
-                            )
-                          : DataTable(
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade100,
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              columnSpacing: 40,
-                              dataRowColor:
-                                  MaterialStateProperty.all(Colors.white),
-                              dataTextStyle: TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              border: TableBorder.all(),
-                              headingRowColor: MaterialStateColor.resolveWith(
-                                  (states) => Colors.grey.shade800),
-                              headingTextStyle: TextStyle(color: Colors.white),
-                              columns: const [
-                                DataColumn(label: Text('Name')),
-                                DataColumn(label: Text('Quantity')),
-                                DataColumn(label: Text('Total')),
-                              ],
-                              rows: List.generate(
-                                cartController.carts.length,
-                                (index) => DataRow(
-                                  cells: [
-                                    DataCell(Text(cartController
-                                        .carts[index]!.menu!.name!)),
-                                    DataCell(Row(
-                                      children: [
-                                        IconButton(
-                                          onPressed: () async {
-                                            await cartController.changeQty(
-                                                tableId,
-                                                cartController
-                                                    .carts[index]!.menu!.id!,
-                                                cartController
-                                                    .carts[index]!.group!,
-                                                cartController.carts[index]!
-                                                        .quantity! -
-                                                    1);
-                                            await cartController
-                                                .getCart(tableId);
-                                          },
-                                          icon: const Icon(
-                                            Icons.remove,
-                                            size: 15,
-                                            color: Colors.amber,
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-//get dialog
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return AlertDialog(
-                                                    title:
-                                                        Text('Change Quantity'),
-                                                    content: Container(
-                                                      height: 100,
-                                                      child: Column(
-                                                        children: [
-                                                          Text(
-                                                              'Current Quantity: ${cartController.carts[index]!.quantity}'),
-                                                          TextFormField(
-                                                              initialValue:
-                                                                  cartController
-                                                                      .carts[
-                                                                          index]!
-                                                                      .quantity
-                                                                      .toString(),
-                                                              keyboardType:
-                                                                  TextInputType
-                                                                      .number,
-                                                              decoration:
-                                                                  const InputDecoration(
-                                                                hintText:
-                                                                    'Enter Quantity',
-                                                              ),
-                                                              onChanged:
-                                                                  (value) {
-                                                                changeQty =
-                                                                    value;
-                                                              }),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    actions: [
-                                                      TextButton(
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: const Text(
-                                                              'Cancel')),
-                                                      TextButton(
-                                                          onPressed: () async {
-                                                            await cartController.changeQty(
-                                                                tableId,
-                                                                cartController
-                                                                    .carts[
-                                                                        index]!
-                                                                    .menu!
-                                                                    .id!,
-                                                                cartController
-                                                                    .carts[
-                                                                        index]!
-                                                                    .group!,
-                                                                int.parse(
-                                                                    changeQty));
-                                                            await cartController
-                                                                .getCart(
-                                                                    tableId);
-
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child:
-                                                              Text('Change')),
-                                                    ],
-                                                  );
-                                                });
-                                          },
-                                          child: Text(
-                                            cartController
-                                                .carts[index]!.quantity
-                                                .toString(),
-                                            style:
-                                                const TextStyle(fontSize: 20),
-                                          ),
-                                        ),
-                                        IconButton(
-                                          onPressed: () async {
-                                            cartController.changeQty(
-                                                tableId,
-                                                cartController
-                                                    .carts[index]!.menu!.id!,
-                                                cartController
-                                                    .carts[index]!.group!,
-                                                cartController.carts[index]!
-                                                        .quantity! +
-                                                    1);
-                                            await cartController
-                                                .getCart(tableId);
-                                          },
-                                          icon: const Icon(
-                                            Icons.add,
-                                            color: Colors.green,
-                                          ),
-                                        ),
-                                        IconButton(
-                                          onPressed: () async {
-                                            await cartController.deleteItem(
-                                                cartController
-                                                    .carts[index]!.tableId!,
-                                                cartController
-                                                    .carts[index]!.menuId!);
-                                            await cartController
-                                                .getCart(tableId);
-                                          },
-                                          icon: const Icon(
-                                            Icons.delete_forever_outlined,
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                      ],
-                                    )),
-                                    DataCell(
-                                      Container(
-                                        child: Text(
-                                          'RS.${(cartController.carts[index]!.menu!.price! * cartController.carts[index]!.quantity!).toStringAsFixed(2)}',
-                                          style: const TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )),
+                  child: DataTable(
+                //columnSpacing: 40,
+                dataRowColor: MaterialStateProperty.all(Colors.white),
+                dataTextStyle: TextStyle(
+                  fontSize: 13,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
                 ),
-              ),
-            ),
-            Obx(() => cartController.isCartLoading.value
-                ? Container()
-                : cartController.carts.isEmpty
-                    ? Container()
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                border: TableBorder.all(),
+                columnSpacing: 20,
+                horizontalMargin: 2,
+
+                headingRowColor: MaterialStateColor.resolveWith(
+                    (states) => Colors.grey.shade800),
+                headingTextStyle: TextStyle(color: Colors.white),
+                columns: const [
+                  DataColumn(label: Text('Name')),
+                  DataColumn(label: Text('Quantity')),
+                  DataColumn(label: Text('Total')),
+                ],
+                rows: List.generate(
+                  cartController.tempCart.length,
+                  (index) => DataRow(
+                    cells: [
+                      DataCell(
+                          Text(cartController.tempCart[index]!.menu!.name)),
+                      DataCell(Row(
                         children: [
-                          InkWell(
-                            onTap: (() async {
-                              await cartController.emptyCart(tableId);
-                              await cartController.getCart(tableId);
-                            }),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 40,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 224, 7, 7),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Empty Cart',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 17),
-                                  ),
-                                ),
-                              ),
+                          IconButton(
+                            onPressed: () {
+                              cartController.changeQty(
+                                  tableId,
+                                  cartController.tempCart[index]!.menu!,
+                                  cartController.tempCart[index]!.quantity! -
+                                      1);
+                              setState(() {});
+                            },
+                            icon: const Icon(
+                              Icons.remove,
+                              size: 15,
+                              color: Colors.amber,
                             ),
                           ),
                           InkWell(
-                            onTap: (() {
-                              cartController.holdCart(tableId);
-                            }),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 40,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 7, 21, 224),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Make Order',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 17),
-                                  ),
-                                ),
-                              ),
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text('Change Quantity'),
+                                      content: Container(
+                                        height: 100,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                                'Current Quantity: ${cartController.tempCart[index]!.quantity}'),
+                                            TextFormField(
+                                                initialValue: cartController
+                                                    .tempCart[index]!.quantity
+                                                    .toString(),
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  hintText: 'Enter Quantity',
+                                                ),
+                                                onChanged: (value) {
+                                                  changeQty = value;
+                                                }),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('Cancel')),
+                                        TextButton(
+                                            onPressed: () {
+                                              cartController.changeQty(
+                                                  tableId,
+                                                  cartController
+                                                      .tempCart[index]!.menu!,
+                                                  int.parse(changeQty));
+                                              setState(() {});
+
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text('Change')),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Text(
+                              cartController.tempCart[index]!.quantity
+                                  .toString(),
+                              style: const TextStyle(fontSize: 20),
                             ),
-                          )
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              cartController.changeQty(
+                                  tableId,
+                                  cartController.tempCart[index]!.menu!,
+                                  cartController.tempCart[index]!.quantity! +
+                                      1);
+                              setState(() {});
+                            },
+                            icon: const Icon(
+                              Icons.add,
+                              color: Colors.green,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              cartController.changeQty(tableId,
+                                  cartController.tempCart[index]!.menu!, 0);
+                              setState(() {});
+                            },
+                            icon: const Icon(
+                              Icons.delete_forever_outlined,
+                              color: Colors.red,
+                            ),
+                          ),
                         ],
                       )),
+                      DataCell(
+                        Container(
+                          child: Text(
+                            'RS.${(cartController.tempCart[index]!.menu!.price! * cartController.tempCart[index]!.quantity!).toStringAsFixed(2)}',
+                            style: const TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                InkWell(
+                  onTap: (() async {
+                    //remove all items from tempCart
+                    cartController.tempCart.clear();
+                    setState(() {});
+                  }),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 40,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 224, 7, 7),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Empty Cart',
+                          style: TextStyle(color: Colors.white, fontSize: 17),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: (() async {
+                    //get dialog box for confirmation
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('Confirm Order'),
+                            content: Container(
+                              height: MediaQuery.of(context).size.height * 0.3,
+                              child: Column(
+                                children: [
+                                  Text('Table Number: $tableName'),
+
+                                  //items in cart
+                                  Text('Items:'),
+                                  for (var i in cartController.tempCart)
+                                    Text('${i!.menu!.name} x ${i.quantity}'),
+                                ],
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('Cancel')),
+                              TextButton(
+                                  onPressed: () async {
+                                    await cartController
+                                        .holdCart(cartController.tempCart);
+                                    tableController.getTables();
+                                    setState(() {});
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('Confirm')),
+                            ],
+                          );
+                        });
+                  }),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 40,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 7, 21, 224),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Make Order',
+                          style: TextStyle(color: Colors.white, fontSize: 17),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
@@ -345,12 +325,15 @@ class _MenuViewState extends State<MenuView> {
                               itemCount: menuController.menus.length,
                               itemBuilder: (context, index) {
                                 return GestureDetector(
-                                  onTap: () async {
-                                    await cartController.addToCart(
-                                      tableId,
-                                      menuController.menus[index]!.id!,
-                                    );
-                                    await cartController.getCart(tableId);
+                                  onTap: () {
+                                    cartController.addToCart(
+                                        tableId, menuController.menus[index]!);
+
+                                    // await cartController.addToCart(
+                                    //   tableId,
+                                    //   menuController.menus[index]!.id!,
+                                    // );
+                                    // await cartController.getCart(tableId);
                                     setState(() {});
                                   },
                                   child: GridTile(
