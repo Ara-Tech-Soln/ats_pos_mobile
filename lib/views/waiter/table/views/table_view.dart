@@ -163,10 +163,10 @@ class _TableViewState extends State<TableView> {
                               child: new Text(value.name!),
                             ))
                     .toList(),
-                onChanged: (value) {
-                  tableController.swapTable(table.id, value);
-                  tableController.getTables();
-                  Navigator.pop(context);
+                onChanged: (value) async {
+                  Get.back();
+                  await tableController.swapTable(table.id, value);
+                  await tableController.getTables();
                 },
               ),
             ),
@@ -175,7 +175,7 @@ class _TableViewState extends State<TableView> {
             actions: [
               TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Get.back();
                   },
                   child: const Text('Cancel')),
             ],
