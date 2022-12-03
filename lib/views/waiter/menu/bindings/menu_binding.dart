@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:startupapplication/controllers/getSharedData.dart';
+import 'package:startupapplication/controllers/qrController.dart';
 import 'package:startupapplication/views/waiter/menu/controllers/cart_controller.dart';
 
 import '../controllers/menu_controller.dart';
@@ -15,6 +16,9 @@ class MenuBinding extends Bindings {
     );
     Get.lazyPut<GetSharedContoller>(
       () => GetSharedContoller(),
+    );
+    Get.lazyPut<QrController>(
+      () => QrController(),
     );
   }
 }

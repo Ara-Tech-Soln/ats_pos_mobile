@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:startupapplication/controllers/qrController.dart';
 import 'package:startupapplication/helpers/functions.dart';
 import 'package:startupapplication/routes/app_pages.dart';
 import 'package:startupapplication/views/waiter/waiter_order/controllers/waiter_order_controller.dart';
@@ -15,6 +16,7 @@ class WaiterOrderView extends StatefulWidget {
 
 class _WaiterOrderViewState extends State<WaiterOrderView> {
   WaiterOrderController waiterOrderController = Get.find();
+  QrController qrController = Get.find();
   @override
   void initState() {
     waiterOrderController.allOrder();

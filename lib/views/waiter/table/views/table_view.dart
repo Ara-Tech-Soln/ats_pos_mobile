@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:startupapplication/controllers/getSharedData.dart';
 import 'package:startupapplication/controllers/pushNotificationController.dart';
 import 'package:startupapplication/controllers/pusher_controller.dart';
+import 'package:startupapplication/controllers/qrController.dart';
 import 'package:startupapplication/helpers/functions.dart';
 import 'package:startupapplication/routes/app_pages.dart';
 import 'package:startupapplication/views/waiter/table/controllers/table_controller.dart';
@@ -20,6 +21,7 @@ class _TableViewState extends State<TableView> {
   PusherController pusherController = Get.find();
   TableController tableController = Get.find();
   GetSharedContoller getSharedController = Get.find();
+  QrController qrController = Get.find();
 
   @override
   void initState() {
@@ -40,7 +42,9 @@ class _TableViewState extends State<TableView> {
           actions: [
             //qr code
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                qrController.scanQrBalance();
+              },
               icon: const Icon(Icons.qr_code),
             ),
             IconButton(
@@ -98,6 +102,7 @@ class _TableViewState extends State<TableView> {
                                                     table.id,
                                                     table.name
                                                   ]);
+                                              qrController.scanQR();
                                             },
                                             onLongPress: (() {
                                               showSwapDialog(table,

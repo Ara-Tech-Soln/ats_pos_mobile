@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:startupapplication/controllers/ApiBaseController/baseController.dart';
 import 'package:startupapplication/helpers/functions.dart';
+import 'package:startupapplication/models/Card.dart';
 import 'package:startupapplication/models/Cart.dart';
 import 'package:startupapplication/models/Menu.dart';
 import 'package:startupapplication/models/Order.dart';
@@ -12,9 +13,10 @@ import 'package:startupapplication/models/User.dart';
 import 'package:startupapplication/services/base_client.dart';
 
 class ApiRequestController with BaseController {
-  // static String baseUrl = 'http://192.168.100.185';
+  //static String baseUrl = 'http://192.168.100.185';
   // static String baseUrl = 'http://vusechho.com';
-  static String baseUrl = 'http://192.168.1.150';
+   static String baseUrl = 'http://192.168.1.150';
+  //static String baseUrl = 'http://192.168.1.65'; //niraj ip
   static String verison = '/api/';
   static String apiBaseUrl = baseUrl + verison;
 
@@ -243,7 +245,7 @@ class ApiRequestController with BaseController {
     }
   }
 
-  holdCart({dynamic cart, String? token}) async {
+  holdCart({dynamic cart, String? token, String? cardId}) async {
     var endPoint = "carts-hold?api_token=" + token!;
 
     var headers = {
@@ -251,7 +253,9 @@ class ApiRequestController with BaseController {
       'Accept': 'application/json',
     };
 
-    var body = jsonEncode({"cart": cart.map((x) => x.toMap()).toList()});
+    var body = jsonEncode(
+      {"cart": cart.map((x) => x.toMap()).toList(), "cardId": cardId},
+    );
 
     var response = await BaseClient()
         .post(apiBaseUrl, endPoint, headers, body)
@@ -284,6 +288,25 @@ class ApiRequestController with BaseController {
     } else {
       print(response);
       return;
+    }
+  }
+
+  getCardDetail({
+    required name,
+    required token,
+  }) async {
+    var endPoint = "card?name=$name&api_token=$token";
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+    var response = await BaseClient().get(apiBaseUrl, endPoint, headers);
+    if (response == null) {
+      return;
+    } else {
+      print(response);
+      return Card.fromJson(response);
     }
   }
 }
