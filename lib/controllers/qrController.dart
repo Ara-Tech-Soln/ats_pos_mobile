@@ -5,12 +5,14 @@ import 'package:startupapplication/controllers/ApiBaseController/apiRequestContr
 import 'package:startupapplication/controllers/getSharedData.dart';
 import 'package:startupapplication/helpers/functions.dart';
 import 'package:startupapplication/models/Card.dart';
+import 'package:startupapplication/routes/app_pages.dart';
 
 class QrController extends GetxController {
   ApiRequestController controller = ApiRequestController();
   GetSharedContoller getSharedContoller = Get.find();
 
   String scanBarcode = 'Unknown';
+  var table_id, table_name;
 
   var isClicked = false.obs;
   var isLoading = false.obs;
@@ -39,7 +41,7 @@ class QrController extends GetxController {
           '#ff6666', 'Cancel', true, ScanMode.QR);
       scanBarcode = barcodeScanRes;
       print(scanBarcode);
-      await getCardDetail();
+      await getCardBalance();
       checkBalance();
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
@@ -50,6 +52,27 @@ class QrController extends GetxController {
   }
 
   getCardDetail() async {
+    try {
+      isLoading(true);
+      var response = await controller.getCardDetail(
+        token: getSharedContoller.token,
+        name: scanBarcode,
+      );
+      print(response);
+      if (response != null) {
+        cardDetail = response;
+        Get.toNamed(Routes.MENU, arguments: [table_id, table_name]);
+      } else {
+        print('error');
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  getCardBalance() async {
     try {
       isLoading(true);
       var response = await controller.getCardDetail(

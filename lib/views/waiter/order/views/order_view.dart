@@ -62,16 +62,12 @@ class _OrderViewState extends State<OrderView> {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(orderController.orders[index].name!
-                                      .toUpperCase() +
-                                  ' x ' +
-                                  orderController.orders[index].quantity
-                                      .toString()),
-                              Text(orderController.orders[index].group!)
-                            ],
+                          title: Text(
+                            orderController.orders[index].name!.toUpperCase() +
+                                ' x ' +
+                                orderController.orders[index].quantity
+                                    .toString(),
+                            style: TextStyle(fontSize: 12),
                           ),
                           subtitle: Row(
                             children: [

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:startupapplication/controllers/getSharedData.dart';
+import 'package:startupapplication/controllers/splash_screen_controller.dart';
 import 'package:startupapplication/routes/app_pages.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,11 +14,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class SplashScreenState extends State<SplashScreen> {
+  SplashScreenController controller = Get.put(SplashScreenController());
   GetSharedContoller getSharedContoller = Get.put(GetSharedContoller());
   @override
   @override
   void initState() {
     super.initState();
+    controller.getSettings();
     loadData();
   }
 

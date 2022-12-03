@@ -6,8 +6,12 @@ import 'package:startupapplication/controllers/getSharedData.dart';
 import 'package:startupapplication/controllers/pushNotificationController.dart';
 import 'package:startupapplication/controllers/pusher_controller.dart';
 import 'package:startupapplication/controllers/qrController.dart';
+import 'package:startupapplication/controllers/splash_screen_controller.dart';
 import 'package:startupapplication/helpers/functions.dart';
+import 'package:startupapplication/models/Setting.dart';
 import 'package:startupapplication/routes/app_pages.dart';
+import 'package:startupapplication/views/waiter/menu/controllers/cart_controller.dart';
+import 'package:startupapplication/views/waiter/order/controllers/order_controller.dart';
 import 'package:startupapplication/views/waiter/table/controllers/table_controller.dart';
 
 class TableView extends StatefulWidget {
@@ -16,12 +20,15 @@ class TableView extends StatefulWidget {
 }
 
 class _TableViewState extends State<TableView> {
+  SplashScreenController settingController = Get.find();
   NotificationController notificationController =
       Get.put(NotificationController());
   PusherController pusherController = Get.find();
   TableController tableController = Get.find();
   GetSharedContoller getSharedController = Get.find();
   QrController qrController = Get.find();
+  CartController cartController = Get.find();
+  OrderController orderController = Get.find();
 
   @override
   void initState() {
@@ -41,12 +48,14 @@ class _TableViewState extends State<TableView> {
           centerTitle: true,
           actions: [
             //qr code
-            IconButton(
-              onPressed: () {
-                qrController.scanQrBalance();
-              },
-              icon: const Icon(Icons.qr_code),
-            ),
+            settingController.setting.value == "Card"
+                ? IconButton(
+                    onPressed: () {
+                      qrController.scanQrBalance();
+                    },
+                    icon: const Icon(Icons.qr_code),
+                  )
+                : Container(),
             IconButton(
               icon: const Icon(Icons.refresh),
               onPressed: () {
@@ -96,17 +105,39 @@ class _TableViewState extends State<TableView> {
                                               ? Colors.green
                                               : Colors.red,
                                           child: InkWell(
-                                            onTap: () {
-                                              Get.toNamed(Routes.MENU,
-                                                  arguments: [
-                                                    table.id,
-                                                    table.name
-                                                  ]);
-                                              qrController.scanQR();
+                                            onTap: () async {
+                                              settingController.setting.value ==
+                                                      "Cash"
+                                                  ? {
+                                                      Get.toNamed(Routes.MENU,
+                                                          arguments: [
+                                                            table.id,
+                                                            table.name
+                                                          ]),
+                                                    }
+                                                  : {
+                                                      cartController.tempCart
+                                                          .clear(),
+                                                      await qrController
+                                                          .scanQR(),
+                                                      cartController
+                                                              .remainingBalance =
+                                                          qrController
+                                                              .cardDetail
+                                                              .balance,
+                                                    };
                                             },
                                             onLongPress: (() {
                                               showSwapDialog(table,
                                                   tableController.tables);
+                                            }),
+                                            onDoubleTap: (() {
+                                              orderController.tableId =
+                                                  table.id;
+                                              orderController.tableName =
+                                                  table.name;
+                                              orderController
+                                                  .orderDetails(table.id);
                                             }),
                                             child: Center(
                                               child: Column(

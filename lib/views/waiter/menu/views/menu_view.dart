@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:startupapplication/controllers/qrController.dart';
+import 'package:startupapplication/controllers/splash_screen_controller.dart';
 import 'package:startupapplication/helpers/functions.dart';
 import 'package:startupapplication/routes/app_pages.dart';
 import 'package:startupapplication/views/waiter/menu/controllers/cart_controller.dart';
@@ -18,7 +19,7 @@ class _MenuViewState extends State<MenuView> {
   var tableId = Get.arguments[0];
   var tableName = Get.arguments[1];
   var changeQty;
-
+  SplashScreenController settingController = Get.find();
   MenuController menuController = Get.find();
   CartController cartController = Get.find();
   TableController tableController = Get.find();
@@ -139,22 +140,36 @@ class _MenuViewState extends State<MenuView> {
                                             child: const Text('Cancel')),
                                         TextButton(
                                             onPressed: () {
-                                              if (cartController
-                                                      .remainingBalance <=
-                                                  menuController
-                                                      .menus[index]!.price!) {
-                                                HelperFunctions.showToast(
-                                                    'Card Balance is not enough');
-                                                return;
-                                              }
-                                              cartController.changeQty(
-                                                  tableId,
-                                                  cartController
-                                                      .tempCart[index]!.menu!,
-                                                  int.parse(changeQty));
-                                              setState(() {});
+                                              if (settingController
+                                                      .setting.value ==
+                                                  "Card") {
+                                                if (cartController
+                                                        .remainingBalance <=
+                                                    menuController
+                                                        .menus[index]!.price!) {
+                                                  HelperFunctions.showToast(
+                                                      'Card Balance is not enough');
+                                                  return;
+                                                }
+                                                cartController.changeQty(
+                                                    tableId,
+                                                    cartController
+                                                        .tempCart[index]!.menu!,
+                                                    int.parse(changeQty));
+                                                setState(() {});
 
-                                              Navigator.pop(context);
+                                                Navigator.pop(context);
+                                              } else {
+                                                cartController.changeQty(
+                                                    tableId,
+                                                    cartController
+                                                        .tempCart[index]!.menu!,
+                                                    int.parse(changeQty));
+                                                setState(() {});
+
+                                                Navigator.pop(context);
+                                              }
+                                              ;
                                             },
                                             child: Text('Change')),
                                       ],
@@ -169,18 +184,27 @@ class _MenuViewState extends State<MenuView> {
                           ),
                           IconButton(
                             onPressed: () {
-                              if (cartController.remainingBalance <=
-                                  menuController.menus[index]!.price!) {
-                                HelperFunctions.showToast(
-                                    'Card Balance is not enough');
-                                return;
+                              if (settingController.setting.value == "Card") {
+                                if (cartController.remainingBalance <=
+                                    menuController.menus[index]!.price!) {
+                                  HelperFunctions.showToast(
+                                      'Card Balance is not enough');
+                                  return;
+                                }
+                                cartController.changeQty(
+                                    tableId,
+                                    cartController.tempCart[index]!.menu!,
+                                    cartController.tempCart[index]!.quantity! +
+                                        1);
+                                setState(() {});
+                              } else {
+                                cartController.changeQty(
+                                    tableId,
+                                    cartController.tempCart[index]!.menu!,
+                                    cartController.tempCart[index]!.quantity! +
+                                        1);
+                                setState(() {});
                               }
-                              cartController.changeQty(
-                                  tableId,
-                                  cartController.tempCart[index]!.menu!,
-                                  cartController.tempCart[index]!.quantity! +
-                                      1);
-                              setState(() {});
                             },
                             icon: const Icon(
                               Icons.add,
@@ -214,49 +238,91 @@ class _MenuViewState extends State<MenuView> {
                 ),
               )),
             ),
-            Obx(() => qrController.isLoading.value
-                ? Text('Loading')
-                : cartController.remainingBalance == null
-                    ? Text(
-                        'Available Balance of Card: ${qrController.cardDetail.balance}')
-                    : Text(
-                        'Available Balance of Card: ${cartController.remainingBalance}')),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                settingController.setting.value == "Cash"
+                    ? Text(
+                        'Total: RS.${cartController.total.toStringAsFixed(2)}')
+                    : Obx(() => qrController.isLoading.value
+                        ? Text('Loading')
+                        : cartController.remainingBalance == null
+                            ? Text(
+                                'Available Balance of Card: ${qrController.cardDetail.balance}')
+                            : Text(
+                                'Available Balance of Card: ${cartController.remainingBalance}')),
                 InkWell(
                   onTap: (() async {
-                    //remove all items from tempCart
-                    cartController.tempCart.clear();
-                    cartController.calculateTotal();
-                    setState(() {});
-                  }),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 40,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 224, 7, 7),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Empty Cart',
-                          style: TextStyle(color: Colors.white, fontSize: 17),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: (() async {
-                    if (cartController.tempCart.length == 0) {
-                      HelperFunctions.showToast('Cart is Empty');
-                    } else if (cartController.remainingBalance <= 0.00) {
-                      HelperFunctions.showToast('Card Balance is not enough');
-                      return;
+                    if (settingController.setting.value == "Card") {
+                      if (cartController.tempCart.length == 0) {
+                        HelperFunctions.showToast('Cart is Empty');
+                      } else if (cartController.remainingBalance <= 0.00) {
+                        HelperFunctions.showToast('Card Balance is not enough');
+                        return;
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text('Confirm Order'),
+                                content: Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.2,
+                                  child: Column(
+                                    children: [
+                                      Text('Table Number: $tableName'),
+
+                                      //items in cart
+                                      Text('Items:'),
+                                      for (var i in cartController.tempCart)
+                                        Text(
+                                            '${i!.menu!.name} x ${i.quantity}'),
+                                    ],
+                                  ),
+                                ),
+                                actions: [
+                                  InkWell(
+                                    onTap: () {
+                                      Get.back();
+                                    },
+                                    child: Container(
+                                      height: 35,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      alignment: Alignment.center,
+                                      decoration:
+                                          HelperFunctions.gradientBtnDecoration,
+                                      child: Text('Cancel',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 17)),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () async {
+                                      Get.back();
+                                      await cartController
+                                          .holdCart(cartController.tempCart);
+                                      tableController.getTables();
+                                      setState(() {});
+                                    },
+                                    child: Container(
+                                      height: 35,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      alignment: Alignment.center,
+                                      decoration:
+                                          HelperFunctions.gradientBtnDecoration,
+                                      child: Text('Confirm',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 17)),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            });
+                      }
                     } else {
                       showDialog(
                           context: context,
@@ -296,11 +362,11 @@ class _MenuViewState extends State<MenuView> {
                                 ),
                                 InkWell(
                                   onTap: () async {
+                                    Get.back();
                                     await cartController
                                         .holdCart(cartController.tempCart);
                                     tableController.getTables();
                                     setState(() {});
-                                    Get.back();
                                   },
                                   child: Container(
                                     height: 35,
@@ -380,26 +446,24 @@ class _MenuViewState extends State<MenuView> {
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                   onTap: () {
-                                    if (cartController.remainingBalance ==
-                                        null) {
-                                      cartController.remainingBalance =
-                                          qrController.cardDetail.balance;
-                                    } else if (cartController
-                                            .remainingBalance <=
-                                        menuController.menus[index]!.price!) {
-                                      HelperFunctions.showToast(
-                                          'Card Balance is not enough');
-                                      return;
-                                    }
-                                    cartController.addToCart(
-                                        tableId, menuController.menus[index]!);
+                                    if (settingController.setting.value ==
+                                        "Card") {
+                                      if (cartController.remainingBalance <=
+                                          menuController.menus[index]!.price!) {
+                                        HelperFunctions.showToast(
+                                            'Card Balance is not enough');
+                                        return;
+                                      }
+                                      cartController.addToCart(tableId,
+                                          menuController.menus[index]!);
 
-                                    // await cartController.addToCart(
-                                    //   tableId,
-                                    //   menuController.menus[index]!.id!,
-                                    // );
-                                    // await cartController.getCart(tableId);
-                                    setState(() {});
+                                      setState(() {});
+                                    } else {
+                                      cartController.addToCart(tableId,
+                                          menuController.menus[index]!);
+
+                                      setState(() {});
+                                    }
                                   },
                                   child: GridTile(
                                     child: Image.network(

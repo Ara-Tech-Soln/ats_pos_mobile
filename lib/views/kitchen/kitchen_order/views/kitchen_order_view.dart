@@ -139,23 +139,24 @@ class _KitchenOrderViewState extends State<KitchenOrderView> {
                             title: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                    'Order For ${kitchenOrderController.orders[index].table}'),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(kitchenOrderController
-                                            .orders[index].name!
-                                            .toUpperCase() +
-                                        ' x ' +
-                                        kitchenOrderController
-                                            .orders[index].quantity
-                                            .toString()),
+                                    Text(
+                                        'Order For ${kitchenOrderController.orders[index].table}'),
                                     Text(
                                         'Batch  ${kitchenOrderController.orders[index].group}'),
                                   ],
                                 ),
+                                Text(
+                                    kitchenOrderController.orders[index].name!
+                                            .toUpperCase() +
+                                        ' x ' +
+                                        kitchenOrderController
+                                            .orders[index].quantity
+                                            .toString(),
+                                    style: TextStyle(fontSize: 12)),
                               ],
                             ),
                             subtitle: Row(

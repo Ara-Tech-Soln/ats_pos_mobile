@@ -8,6 +8,7 @@ import 'package:startupapplication/models/Card.dart';
 import 'package:startupapplication/models/Cart.dart';
 import 'package:startupapplication/models/Menu.dart';
 import 'package:startupapplication/models/Order.dart';
+import 'package:startupapplication/models/Setting.dart';
 import 'package:startupapplication/models/Table.dart';
 import 'package:startupapplication/models/User.dart';
 import 'package:startupapplication/services/base_client.dart';
@@ -15,10 +16,23 @@ import 'package:startupapplication/services/base_client.dart';
 class ApiRequestController with BaseController {
   //static String baseUrl = 'http://192.168.100.185';
   // static String baseUrl = 'http://vusechho.com';
-   static String baseUrl = 'http://192.168.1.150';
-  //static String baseUrl = 'http://192.168.1.65'; //niraj ip
+  static String baseUrl = 'http://192.168.1.150';
+  // static String baseUrl = 'http://192.168.1.65'; //niraj ip
   static String verison = '/api/';
   static String apiBaseUrl = baseUrl + verison;
+
+  getSettings() async {
+    var endPoint = "settings";
+    var response = await BaseClient()
+        .get(apiBaseUrl, endPoint, null)
+        .catchError(handelError);
+
+    if (response == null) {
+      return;
+    } else {
+      return Setting.fromJson(response);
+    }
+  }
 
   login({
     required String email,

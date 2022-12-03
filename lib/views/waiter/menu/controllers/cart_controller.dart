@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:startupapplication/controllers/ApiBaseController/apiRequestController.dart';
 import 'package:startupapplication/controllers/getSharedData.dart';
 import 'package:startupapplication/controllers/qrController.dart';
+import 'package:startupapplication/controllers/splash_screen_controller.dart';
 import 'package:startupapplication/helpers/functions.dart';
 import 'package:startupapplication/models/Cart.dart';
 
 class CartController extends GetxController {
   ApiRequestController controller = ApiRequestController();
+  SplashScreenController settingController = Get.find();
   GetSharedContoller getSharedContoller = Get.find();
   QrController qrController = Get.find();
 
@@ -92,8 +94,12 @@ class CartController extends GetxController {
     tempCart.forEach((element) {
       total = total + (element!.menu!.price! * element.quantity!);
     });
-    remainingBalance = qrController.cardDetail.balance! - total;
-    print(remainingBalance);
+    settingController.setting.value == "Card"
+        ? {
+            remainingBalance = qrController.cardDetail.balance! - total,
+            print(remainingBalance),
+          }
+        : {};
 
     return total;
   }

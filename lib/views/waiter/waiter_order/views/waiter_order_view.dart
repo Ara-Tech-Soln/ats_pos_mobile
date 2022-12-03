@@ -84,23 +84,25 @@ class _WaiterOrderViewState extends State<WaiterOrderView> {
                             title: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                    'Order For ${waiterOrderController.orders[index].table}'),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(waiterOrderController
-                                            .orders[index].name!
+                                    Text(
+                                        'Order For ${waiterOrderController.orders[index].table}'),
+                                    Text(
+                                        'Batch  ${waiterOrderController.orders[index].group}',
+                                        style: TextStyle(fontSize: 11)),
+                                  ],
+                                ),
+                                Text(
+                                    waiterOrderController.orders[index].name!
                                             .toUpperCase() +
                                         ' x ' +
                                         waiterOrderController
                                             .orders[index].quantity
-                                            .toString()),
-                                    Text(
-                                        'Batch  ${waiterOrderController.orders[index].group}'),
-                                  ],
-                                ),
+                                            .toString(),
+                                    style: TextStyle(fontSize: 11)),
                               ],
                             ),
                             subtitle: Row(
