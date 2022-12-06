@@ -36,7 +36,7 @@ class _MenuViewState extends State<MenuView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).backgroundColor,
-        title: Text(tableName),
+        title: Text(tableName!),
         centerTitle: true,
         actions: [
           //view orders
@@ -242,168 +242,188 @@ class _MenuViewState extends State<MenuView> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 settingController.setting.value == "Cash"
-                    ? Text(
-                        'Total: RS.${cartController.total.toStringAsFixed(2)}')
+                    ? Obx(() => qrController.isLoading.value
+                        ? Text('Loading')
+                        : Text(
+                            'Total: RS.${cartController.total.toStringAsFixed(2)}'))
                     : Obx(() => qrController.isLoading.value
                         ? Text('Loading')
                         : cartController.remainingBalance == null
-                            ? Text(
-                                'Available Balance of Card: ${qrController.cardDetail.balance}')
+                            ? Container()
                             : Text(
                                 'Available Balance of Card: ${cartController.remainingBalance}')),
-                InkWell(
-                  onTap: (() async {
-                    if (settingController.setting.value == "Card") {
-                      if (cartController.tempCart.length == 0) {
-                        HelperFunctions.showToast('Cart is Empty');
-                      } else if (cartController.remainingBalance <= 0.00) {
-                        HelperFunctions.showToast('Card Balance is not enough');
-                        return;
-                      } else {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text('Confirm Order'),
-                                content: Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.2,
-                                  child: Column(
-                                    children: [
-                                      Text('Table Number: $tableName'),
+                Obx(() => cartController.isLoading.value
+                    ? Text('Please Wait')
+                    : InkWell(
+                        onTap: (() async {
+                          if (settingController.setting.value == "Card") {
+                            if (cartController.tempCart.length == 0) {
+                              HelperFunctions.showToast('Cart is Empty');
+                            } else if (cartController.remainingBalance <=
+                                0.00) {
+                              HelperFunctions.showToast(
+                                  'Card Balance is not enough');
+                              return;
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text('Confirm Order'),
+                                      content: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.2,
+                                        child: Column(
+                                          children: [
+                                            Text('Table Number: '),
 
-                                      //items in cart
-                                      Text('Items:'),
-                                      for (var i in cartController.tempCart)
-                                        Text(
-                                            '${i!.menu!.name} x ${i.quantity}'),
+                                            //items in cart
+                                            Text('Items:'),
+                                            for (var i
+                                                in cartController.tempCart)
+                                              Text(
+                                                  '${i!.menu!.name} x ${i.quantity}'),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: [
+                                        InkWell(
+                                          onTap: () {
+                                            Get.back();
+                                          },
+                                          child: Container(
+                                            height: 35,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.3,
+                                            alignment: Alignment.center,
+                                            decoration: HelperFunctions
+                                                .gradientBtnDecoration,
+                                            child: Text('Cancel',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 17)),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () async {
+                                            Get.back();
+                                            await cartController.holdCart(
+                                                cartController.tempCart);
+                                            tableController.getTables();
+                                            setState(() {});
+                                          },
+                                          child: Container(
+                                            height: 35,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.3,
+                                            alignment: Alignment.center,
+                                            decoration: HelperFunctions
+                                                .gradientBtnDecoration,
+                                            child: Text('Confirm',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 17)),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            }
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text('Confirm Order'),
+                                    content: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.2,
+                                      child: Column(
+                                        children: [
+                                          Text('Table Number: '),
+
+                                          //items in cart
+                                          Text('Items:'),
+                                          for (var i in cartController.tempCart)
+                                            Text(
+                                                '${i!.menu!.name} x ${i.quantity}'),
+                                        ],
+                                      ),
+                                    ),
+                                    actions: [
+                                      InkWell(
+                                        onTap: () {
+                                          Get.back();
+                                        },
+                                        child: Container(
+                                          height: 35,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          alignment: Alignment.center,
+                                          decoration: HelperFunctions
+                                              .gradientBtnDecoration,
+                                          child: Text('Cancel',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 17)),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () async {
+                                          Get.back();
+                                          await cartController.holdCart(
+                                              cartController.tempCart);
+                                          tableController.getTables();
+                                          setState(() {});
+                                        },
+                                        child: Container(
+                                          height: 35,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          alignment: Alignment.center,
+                                          decoration: HelperFunctions
+                                              .gradientBtnDecoration,
+                                          child: Text('Confirm',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 17)),
+                                        ),
+                                      ),
                                     ],
-                                  ),
-                                ),
-                                actions: [
-                                  InkWell(
-                                    onTap: () {
-                                      Get.back();
-                                    },
-                                    child: Container(
-                                      height: 35,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.3,
-                                      alignment: Alignment.center,
-                                      decoration:
-                                          HelperFunctions.gradientBtnDecoration,
-                                      child: Text('Cancel',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 17)),
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () async {
-                                      Get.back();
-                                      await cartController
-                                          .holdCart(cartController.tempCart);
-                                      tableController.getTables();
-                                      setState(() {});
-                                    },
-                                    child: Container(
-                                      height: 35,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.3,
-                                      alignment: Alignment.center,
-                                      decoration:
-                                          HelperFunctions.gradientBtnDecoration,
-                                      child: Text('Confirm',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 17)),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            });
-                      }
-                    } else {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: Text('Confirm Order'),
-                              content: Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.2,
-                                child: Column(
-                                  children: [
-                                    Text('Table Number: $tableName'),
-
-                                    //items in cart
-                                    Text('Items:'),
-                                    for (var i in cartController.tempCart)
-                                      Text('${i!.menu!.name} x ${i.quantity}'),
-                                  ],
-                                ),
+                                  );
+                                });
+                          }
+                        }),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 40,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 7, 21, 224),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Make Order',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 17),
                               ),
-                              actions: [
-                                InkWell(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  child: Container(
-                                    height: 35,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.3,
-                                    alignment: Alignment.center,
-                                    decoration:
-                                        HelperFunctions.gradientBtnDecoration,
-                                    child: Text('Cancel',
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 17)),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () async {
-                                    Get.back();
-                                    await cartController
-                                        .holdCart(cartController.tempCart);
-                                    tableController.getTables();
-                                    setState(() {});
-                                  },
-                                  child: Container(
-                                    height: 35,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.3,
-                                    alignment: Alignment.center,
-                                    decoration:
-                                        HelperFunctions.gradientBtnDecoration,
-                                    child: Text('Confirm',
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 17)),
-                                  ),
-                                ),
-                              ],
-                            );
-                          });
-                    }
-                  }),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 40,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 7, 21, 224),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Make Order',
-                          style: TextStyle(color: Colors.white, fontSize: 17),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                )
+                      ))
               ],
             ),
             Padding(
@@ -466,10 +486,16 @@ class _MenuViewState extends State<MenuView> {
                                     }
                                   },
                                   child: GridTile(
-                                    child: Image.network(
-                                      menuController.menus[index]!.image!,
-                                      fit: BoxFit.cover,
-                                    ),
+                                    child: menuController.menus[index]!.image ==
+                                            ""
+                                        ? Image.network(
+                                            'https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg',
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Image.network(
+                                            menuController.menus[index]!.image!,
+                                            fit: BoxFit.cover,
+                                          ),
                                     footer: GridTileBar(
                                       title: Text(
                                         menuController.menus[index]!.name!,

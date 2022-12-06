@@ -8,7 +8,6 @@ import 'package:startupapplication/controllers/pusher_controller.dart';
 import 'package:startupapplication/controllers/qrController.dart';
 import 'package:startupapplication/controllers/splash_screen_controller.dart';
 import 'package:startupapplication/helpers/functions.dart';
-import 'package:startupapplication/models/Setting.dart';
 import 'package:startupapplication/routes/app_pages.dart';
 import 'package:startupapplication/views/waiter/menu/controllers/cart_controller.dart';
 import 'package:startupapplication/views/waiter/order/controllers/order_controller.dart';
@@ -50,8 +49,8 @@ class _TableViewState extends State<TableView> {
             //qr code
             settingController.setting.value == "Card"
                 ? IconButton(
-                    onPressed: () {
-                      qrController.scanQrBalance();
+                    onPressed: () async {
+                      await qrController.scanQrBalance();
                     },
                     icon: const Icon(Icons.qr_code),
                   )
@@ -106,26 +105,29 @@ class _TableViewState extends State<TableView> {
                                               : Colors.red,
                                           child: InkWell(
                                             onTap: () async {
-                                              settingController.setting.value ==
-                                                      "Cash"
-                                                  ? {
-                                                      Get.toNamed(Routes.MENU,
-                                                          arguments: [
-                                                            table.id,
-                                                            table.name
-                                                          ]),
-                                                    }
-                                                  : {
-                                                      cartController.tempCart
-                                                          .clear(),
-                                                      await qrController
-                                                          .scanQR(),
-                                                      cartController
-                                                              .remainingBalance =
-                                                          qrController
-                                                              .cardDetail
-                                                              .balance,
-                                                    };
+                                              if (settingController
+                                                      .setting.value ==
+                                                  "Card") {
+                                                qrController.tableId = table.id;
+                                                qrController.tableName =
+                                                    table.name;
+                                                cartController.tempCart.clear();
+                                                await qrController.scanQR();
+                                                cartController
+                                                        .remainingBalance =
+                                                    qrController
+                                                        .cardDetail.balance;
+                                              } else {
+                                                cartController.tempCart.clear();
+                                                await cartController
+                                                    .calculateTotal();
+                                                Get.toNamed(Routes.MENU,
+                                                    arguments: [
+                                                      table.id,
+                                                      table.name
+                                                    ]);
+                                              }
+                                              ;
                                             },
                                             onLongPress: (() {
                                               showSwapDialog(table,

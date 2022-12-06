@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:startupapplication/controllers/getSharedData.dart';
 import 'package:startupapplication/controllers/pusher_controller.dart';
 import 'package:startupapplication/controllers/qrController.dart';
+import 'package:startupapplication/controllers/splash_screen_controller.dart';
 import 'package:startupapplication/views/waiter/menu/controllers/cart_controller.dart';
 import 'package:startupapplication/views/waiter/order/controllers/order_controller.dart';
 
@@ -27,6 +28,9 @@ class TableBinding extends Bindings {
     );
     Get.lazyPut<OrderController>(
       () => OrderController(),
+    );
+    Get.lazyPut<SplashScreenController>(
+      () => SplashScreenController(),
     );
   }
 }

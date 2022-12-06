@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
+import 'package:startupapplication/views/admin/card/views/card_details_view.dart';
 
+import '../views/admin/card/bindings/card_binding.dart';
+import '../views/admin/card/views/card_view.dart';
 import '../views/bar/bar_order/bindings/bar_order_binding.dart';
 import '../views/bar/bar_order/views/bar_order_view.dart';
 import '../views/homePage.dart';
@@ -66,8 +69,18 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.WAITER_ORDER,
-      page: () => const WaiterOrderView(),
+      page: () => WaiterOrderView(),
       binding: WaiterOrderBinding(),
+    ),
+    GetPage(
+      name: _Paths.CARD,
+      page: () => CardView(),
+      binding: CardBinding(),
+    ),
+    GetPage(
+      name: _Paths.CARD_DETAILS,
+      page: () => CardDetailsView(),
+      binding: CardBinding(),
     ),
   ];
 }

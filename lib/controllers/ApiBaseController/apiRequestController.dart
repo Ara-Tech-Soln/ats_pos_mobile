@@ -4,6 +4,8 @@ import 'dart:convert';
 
 import 'package:startupapplication/controllers/ApiBaseController/baseController.dart';
 import 'package:startupapplication/helpers/functions.dart';
+import 'package:startupapplication/models/Accounts.dart';
+import 'package:startupapplication/models/AddCard.dart';
 import 'package:startupapplication/models/Card.dart';
 import 'package:startupapplication/models/Cart.dart';
 import 'package:startupapplication/models/Menu.dart';
@@ -14,7 +16,7 @@ import 'package:startupapplication/models/User.dart';
 import 'package:startupapplication/services/base_client.dart';
 
 class ApiRequestController with BaseController {
-  //static String baseUrl = 'http://192.168.100.185';
+  // static String baseUrl = 'http://192.168.100.185'; //shadows ip
   // static String baseUrl = 'http://vusechho.com';
   static String baseUrl = 'http://192.168.1.150';
   // static String baseUrl = 'http://192.168.1.65'; //niraj ip
@@ -321,6 +323,64 @@ class ApiRequestController with BaseController {
     } else {
       print(response);
       return Card.fromJson(response);
+    }
+  }
+
+  getCards({
+    String? token,
+  }) async {
+    var endPoint = "cards?&api_token=$token";
+    var headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+    var response = await BaseClient().get(apiBaseUrl, endPoint, headers);
+    if (response == null) {
+      return;
+    } else {
+      print(response);
+      return List<Card>.from(json.decode(response).map((x) => Card.fromMap(x)));
+    }
+  }
+
+  addCard({
+    String? name,
+    String? token,
+    String? address,
+  }) async {
+    var endPoint = "cards?api_token=$token";
+    var body = jsonEncode({
+      "name": name,
+      "address": address,
+    });
+    var headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+    var response = await BaseClient().post(apiBaseUrl, endPoint, headers, body);
+    if (response == null) {
+      return;
+    } else {
+      print(response);
+      return AddCard.fromJson(response);
+    }
+  }
+
+  getAccounts({
+    String? token,
+  }) async {
+    var endPoint = "accounts?&api_token=$token";
+    var headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+    var response = await BaseClient().get(apiBaseUrl, endPoint, headers);
+    if (response == null) {
+      return;
+    } else {
+      print(response);
+      return List<Accounts>.from(
+          json.decode(response).map((x) => Accounts.fromMap(x)));
     }
   }
 }

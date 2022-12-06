@@ -32,13 +32,17 @@ class SplashScreenState extends State<SplashScreen> {
         Timer(Duration(seconds: 3), () {
           getSharedContoller.token == null
               ? Get.offNamed(Routes.LOGIN)
-              : getSharedContoller.role == "waiter"
+              : getSharedContoller.role == 'waiter'
                   ? Get.toNamed(Routes.TABLE)
-                  : getSharedContoller.role == "kitchen"
+                  : getSharedContoller.role == 'kitchen'
                       ? Get.toNamed(Routes.KITCHEN_ORDER)
-                      : getSharedContoller.role == "bar"
+                      : getSharedContoller.role == 'bar'
                           ? Get.toNamed(Routes.BAR_ORDER)
-                          : Get.toNamed(Routes.LOGIN);
+                          : controller.setting.value == "Card" &&
+                                  (getSharedContoller.role == 'manager' ||
+                                      getSharedContoller.role == 'cashier')
+                              ? Get.toNamed(Routes.CARD)
+                              : Get.toNamed(Routes.LOGIN);
         });
       } catch (e) {
         print(e.toString());

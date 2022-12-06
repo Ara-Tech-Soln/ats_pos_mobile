@@ -14,7 +14,7 @@ class CartController extends GetxController {
   GetSharedContoller getSharedContoller = Get.find();
   QrController qrController = Get.find();
 
-  var isLoading = true.obs;
+  var isLoading = false.obs;
   List<Cart?> carts = <Cart>[];
   var tempCart = [];
   var total = 0.00;
@@ -61,7 +61,6 @@ class CartController extends GetxController {
       print(e);
     } finally {
       calculateTotal();
-      isLoading(false);
     }
   }
 
@@ -90,6 +89,7 @@ class CartController extends GetxController {
   }
 
   calculateTotal() {
+    isLoading(true);
     total = 0.00;
     tempCart.forEach((element) {
       total = total + (element!.menu!.price! * element.quantity!);
@@ -100,6 +100,7 @@ class CartController extends GetxController {
             print(remainingBalance),
           }
         : {};
+    isLoading(false);
 
     return total;
   }
