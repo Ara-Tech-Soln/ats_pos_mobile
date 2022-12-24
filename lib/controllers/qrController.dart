@@ -11,7 +11,7 @@ import 'package:startupapplication/views/admin/card/controllers/card_controller.
 class QrController extends GetxController {
   ApiRequestController controller = ApiRequestController();
   GetSharedContoller getSharedContoller = Get.find();
-  CardController cardController = Get.find();
+  CardController cardController = Get.put(CardController());
 
   String scanBarcode = 'Unknown';
   var tableId, tableName;

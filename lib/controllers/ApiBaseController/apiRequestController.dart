@@ -18,8 +18,9 @@ import 'package:startupapplication/services/base_client.dart';
 class ApiRequestController with BaseController {
   // static String baseUrl = 'http://192.168.100.185'; //shadows ip
   // static String baseUrl = 'http://vusechho.com';
-  static String baseUrl = 'http://192.168.1.150';
+  // static String baseUrl = 'http://192.168.1.150';
   // static String baseUrl = 'http://192.168.1.65'; //niraj ip
+  static String baseUrl = 'http://192.168.1.77'; //pankaj@niraj ip
   static String verison = '/api/';
   static String apiBaseUrl = baseUrl + verison;
 
