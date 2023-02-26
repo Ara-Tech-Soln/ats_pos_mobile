@@ -20,7 +20,7 @@ class _MenuViewState extends State<MenuView> {
   var tableName = Get.arguments[1];
   var changeQty;
   SplashScreenController settingController = Get.find();
-  MenuController menuController = Get.find();
+  MenuControllers menuController = Get.find();
   CartController cartController = Get.find();
   TableController tableController = Get.find();
   QrController qrController = Get.find();
@@ -35,7 +35,7 @@ class _MenuViewState extends State<MenuView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         title: Text(tableName!),
         centerTitle: true,
         actions: [

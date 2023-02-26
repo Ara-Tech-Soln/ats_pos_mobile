@@ -31,7 +31,7 @@ class _KitchenOrderViewState extends State<KitchenOrderView> {
       child: Scaffold(
         appBar: AppBar(
           leading: Container(),
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text('Kitchen Order'),
           centerTitle: true,
           actions: [

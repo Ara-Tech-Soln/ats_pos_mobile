@@ -49,10 +49,12 @@ class _LoginPageState extends State<LoginPage> {
                               decoration: BoxDecoration(
                                   gradient: LinearGradient(colors: [
                                 Theme.of(context)
-                                    .backgroundColor
+                                    .colorScheme
+                                    .background
                                     .withOpacity(0.5),
                                 Theme.of(context)
-                                    .backgroundColor
+                                    .colorScheme
+                                    .background
                                     .withOpacity(0.25)
                               ])),
                             ),
@@ -65,9 +67,10 @@ class _LoginPageState extends State<LoginPage> {
                               height: 300,
                               decoration: BoxDecoration(
                                   gradient: LinearGradient(colors: [
-                                Theme.of(context).backgroundColor,
+                                Theme.of(context).colorScheme.background,
                                 Theme.of(context)
-                                    .backgroundColor
+                                    .colorScheme
+                                    .background
                                     .withOpacity(0.25)
                               ])),
                             ),
@@ -102,8 +105,8 @@ class _LoginPageState extends State<LoginPage> {
                               height: 300,
                               decoration: BoxDecoration(
                                   gradient: LinearGradient(colors: [
-                                Theme.of(context).backgroundColor,
-                                Theme.of(context).backgroundColor
+                                Theme.of(context).colorScheme.background,
+                                Theme.of(context).colorScheme.background
                               ])),
                             ),
                           ),
@@ -136,7 +139,8 @@ class _LoginPageState extends State<LoginPage> {
                               }
                               return null;
                             },
-                            cursorColor: Theme.of(context).backgroundColor,
+                            cursorColor:
+                                Theme.of(context).colorScheme.background,
                             decoration: InputDecoration(
                                 hintText: "Email Address",
                                 prefixIcon: Material(
@@ -145,7 +149,9 @@ class _LoginPageState extends State<LoginPage> {
                                       BorderRadius.all(Radius.circular(30)),
                                   child: Icon(
                                     Icons.mail_lock_rounded,
-                                    color: Theme.of(context).backgroundColor,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
                                   ),
                                 ),
                                 border: InputBorder.none,
@@ -179,7 +185,8 @@ class _LoginPageState extends State<LoginPage> {
                             onSaved: (loginPassword) =>
                                 loginPassword = loginPassword,
                             obscureText: _obscureTextLogin,
-                            cursorColor: Theme.of(context).backgroundColor,
+                            cursorColor:
+                                Theme.of(context).colorScheme.background,
                             decoration: InputDecoration(
                                 hintText: "Password",
                                 prefixIcon: Material(
@@ -188,7 +195,9 @@ class _LoginPageState extends State<LoginPage> {
                                       BorderRadius.all(Radius.circular(30)),
                                   child: Icon(
                                     Icons.lock,
-                                    color: Theme.of(context).backgroundColor,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
                                   ),
                                 ),
                                 suffixIcon: Padding(
@@ -198,12 +207,14 @@ class _LoginPageState extends State<LoginPage> {
                                         ? Icon(
                                             Icons.remove_red_eye,
                                             color: Theme.of(context)
-                                                .backgroundColor,
+                                                .colorScheme
+                                                .background,
                                           )
                                         : Icon(
                                             Icons.panorama_fish_eye,
                                             color: Theme.of(context)
-                                                .backgroundColor,
+                                                .colorScheme
+                                                .background,
                                           ),
                                     onPressed: () {
                                       setState(() {
@@ -296,7 +307,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                         fontSize: 24.0,
                         fontWeight: FontWeight.w700,
-                        color: Theme.of(context).backgroundColor),
+                        color: Theme.of(context).colorScheme.background),
                   ),
                   SizedBox(height: 16.0),
                   Text(

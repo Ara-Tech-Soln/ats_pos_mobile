@@ -25,7 +25,7 @@ class _OrderViewState extends State<OrderView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         title: Text(
           'Order for ${tableName}',
         ),

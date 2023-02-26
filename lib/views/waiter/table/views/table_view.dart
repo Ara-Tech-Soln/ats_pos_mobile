@@ -42,7 +42,7 @@ class _TableViewState extends State<TableView> {
       child: Scaffold(
         appBar: AppBar(
           leading: Container(),
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text('ATS POS MOBILE'),
           centerTitle: true,
           actions: [
@@ -176,7 +176,7 @@ class _TableViewState extends State<TableView> {
           },
           icon: const Icon(Icons.restaurant_menu),
           label: const Text('View Orders'),
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background,
         ),
       ),
     );

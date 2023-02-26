@@ -20,11 +20,11 @@ class DialogHelper {
                 ),
                 Text(
                   title,
-                  style: Get.textTheme.headline4,
+                  style: Get.textTheme.bodyMedium,
                 ),
                 Text(
                   description,
-                  style: Get.textTheme.headline6,
+                  style: Get.textTheme.bodyMedium,
                 ),
                 SizedBox(
                   width: 250,

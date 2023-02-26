@@ -37,54 +37,53 @@ class MyApp extends StatelessWidget {
         floatingActionButtonTheme: FloatingActionButtonThemeData(
             elevation: 0, foregroundColor: Colors.white),
         brightness: Brightness.light,
-        backgroundColor: config.Colors().mainColor(1),
         dividerColor: config.Colors().accentColor(0.1),
         focusColor: config.Colors().accentColor(1),
         hintColor: config.Colors().secondColor(1),
         textTheme: TextTheme(
-          headline5: TextStyle(
+          headlineSmall: TextStyle(
               fontSize: 20.0,
               color: config.Colors().secondColor(1),
               height: 1.35),
-          headline4: TextStyle(
+          headlineMedium: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.w600,
               color: config.Colors().secondColor(1),
               height: 1.35),
-          headline3: TextStyle(
+          displaySmall: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.w600,
               color: config.Colors().secondColor(1),
               height: 1.35),
-          headline2: TextStyle(
+          displayMedium: TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.w700,
               color: config.Colors().mainColor(1),
               height: 1.35),
-          headline1: TextStyle(
+          displayLarge: TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.w300,
               color: config.Colors().secondColor(1),
               height: 1.5),
-          subtitle1: TextStyle(
+          titleMedium: TextStyle(
               fontSize: 15.0,
               fontWeight: FontWeight.w500,
               color: config.Colors().secondColor(1),
               height: 1.35),
-          headline6: TextStyle(
+          titleLarge: TextStyle(
               fontSize: 16.0,
               fontWeight: FontWeight.w600,
               color: config.Colors().mainColor(1),
               height: 1.35),
-          bodyText2: TextStyle(
+          bodyMedium: TextStyle(
               fontSize: 12.0,
               color: config.Colors().secondColor(1),
               height: 1.35),
-          bodyText1: TextStyle(
+          bodyLarge: TextStyle(
               fontSize: 14.0,
               color: config.Colors().secondColor(1),
               height: 1.35),
-          caption: TextStyle(
+          bodySmall: TextStyle(
               fontSize: 12.0,
               color: config.Colors().accentColor(1),
               height: 1.35),
@@ -95,54 +94,53 @@ class MyApp extends StatelessWidget {
         primaryColor: Color(0xFF252525),
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Color(0xFF2C2C2C),
-        backgroundColor: config.Colors().mainDarkColor(1),
         dividerColor: config.Colors().accentColor(0.1),
         hintColor: config.Colors().secondDarkColor(1),
         focusColor: config.Colors().accentDarkColor(1),
         textTheme: TextTheme(
-          headline5: TextStyle(
+          headlineSmall: TextStyle(
               fontSize: 20.0,
               color: config.Colors().secondDarkColor(1),
               height: 1.35),
-          headline4: TextStyle(
+          headlineMedium: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.w600,
               color: config.Colors().secondDarkColor(1),
               height: 1.35),
-          headline3: TextStyle(
+          displaySmall: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.w600,
               color: config.Colors().secondDarkColor(1),
               height: 1.35),
-          headline2: TextStyle(
+          displayMedium: TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.w700,
               color: config.Colors().mainDarkColor(1),
               height: 1.35),
-          headline1: TextStyle(
+          displayLarge: TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.w300,
               color: config.Colors().secondDarkColor(1),
               height: 1.5),
-          subtitle1: TextStyle(
+          titleMedium: TextStyle(
               fontSize: 15.0,
               fontWeight: FontWeight.w500,
               color: config.Colors().secondDarkColor(1),
               height: 1.35),
-          headline6: TextStyle(
+          titleLarge: TextStyle(
               fontSize: 16.0,
               fontWeight: FontWeight.w600,
               color: config.Colors().mainDarkColor(1),
               height: 1.35),
-          bodyText2: TextStyle(
+          bodyMedium: TextStyle(
               fontSize: 12.0,
               color: config.Colors().secondDarkColor(1),
               height: 1.35),
-          bodyText1: TextStyle(
+          bodyLarge: TextStyle(
               fontSize: 14.0,
               color: config.Colors().secondDarkColor(1),
               height: 1.35),
-          caption: TextStyle(
+          bodySmall: TextStyle(
               fontSize: 12.0,
               color: config.Colors().secondDarkColor(0.6),
               height: 1.35),

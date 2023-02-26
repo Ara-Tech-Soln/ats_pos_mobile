@@ -27,7 +27,7 @@ class _CardViewState extends State<CardView> {
       child: Scaffold(
         appBar: AppBar(
           leading: Container(),
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text('Available Cards'),
           centerTitle: true,
           actions: [
@@ -127,7 +127,7 @@ class _CardViewState extends State<CardView> {
           },
           icon: const Icon(Icons.qr_code_scanner_sharp),
           label: const Text('Add Card'),
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background,
         ),
       ),
     );

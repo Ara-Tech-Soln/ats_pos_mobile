@@ -30,7 +30,7 @@ class _BarOrderViewState extends State<BarOrderView> {
       child: Scaffold(
         appBar: AppBar(
           leading: Container(),
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text('Bar Order'),
           centerTitle: true,
           actions: [

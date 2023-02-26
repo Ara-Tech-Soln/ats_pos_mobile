@@ -6,7 +6,7 @@ class LoadingWidget extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(context).colorScheme.background,
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(30.0),
@@ -19,7 +19,7 @@ class LoadingWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: LinearProgressIndicator(
                   backgroundColor: Theme.of(context).primaryColor,
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).colorScheme.background,
                 ),
               ),
             ],

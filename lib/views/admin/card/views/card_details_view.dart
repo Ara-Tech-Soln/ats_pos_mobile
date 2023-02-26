@@ -21,7 +21,7 @@ class _CardDetailsViewState extends State<CardDetailsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         title: Text(card.name!),
         centerTitle: true,
       ),
@@ -67,7 +67,7 @@ class _CardDetailsViewState extends State<CardDetailsView> {
                     }
                     return null;
                   },
-                  cursorColor: Theme.of(context).backgroundColor,
+                  cursorColor: Theme.of(context).colorScheme.background,
                   decoration: InputDecoration(
                       hintText: "Enter Amount",
                       prefixIcon: Material(
@@ -75,7 +75,7 @@ class _CardDetailsViewState extends State<CardDetailsView> {
                         borderRadius: BorderRadius.all(Radius.circular(30)),
                         child: Icon(
                           Icons.attach_money_outlined,
-                          color: Theme.of(context).backgroundColor,
+                          color: Theme.of(context).colorScheme.background,
                         ),
                       ),
                       border: InputBorder.none,
@@ -185,7 +185,7 @@ class _CardDetailsViewState extends State<CardDetailsView> {
                   },
                   maxLength: 4,
                   keyboardType: TextInputType.text,
-                  cursorColor: Theme.of(context).backgroundColor,
+                  cursorColor: Theme.of(context).colorScheme.background,
                   decoration: InputDecoration(
                       hintText: "Enter notes",
                       prefixIcon: Material(
@@ -193,7 +193,7 @@ class _CardDetailsViewState extends State<CardDetailsView> {
                         borderRadius: BorderRadius.all(Radius.circular(30)),
                         child: Icon(
                           Icons.note_add,
-                          color: Theme.of(context).backgroundColor,
+                          color: Theme.of(context).colorScheme.background,
                         ),
                       ),
                       border: InputBorder.none,

@@ -29,7 +29,7 @@ class _WaiterOrderViewState extends State<WaiterOrderView> {
       onWillPop: () async => true,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text(' Orders'),
           centerTitle: true,
           actions: [

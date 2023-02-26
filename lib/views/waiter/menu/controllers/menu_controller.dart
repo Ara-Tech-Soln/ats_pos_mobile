@@ -3,7 +3,7 @@ import 'package:startupapplication/controllers/ApiBaseController/apiRequestContr
 import 'package:startupapplication/controllers/getSharedData.dart';
 import 'package:startupapplication/models/Menu.dart';
 
-class MenuController extends GetxController {
+class MenuControllers extends GetxController {
   ApiRequestController controller = ApiRequestController();
   GetSharedContoller getSharedContoller = Get.find();
 
