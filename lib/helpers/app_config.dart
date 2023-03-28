@@ -46,22 +46,22 @@ class Colors {
   }
 
   Color accentColor(double opacity) {
-    return Color(0xFFCCCCCC).withOpacity(opacity);
+    return Color.fromARGB(255, 163, 11, 11).withOpacity(opacity);
   }
 
   Color mainDarkColor(double opacity) {
-    return Color(0xFFCCCCCC).withOpacity(opacity);
+    return Color.fromARGB(255, 163, 21, 21).withOpacity(opacity);
   }
 
   Color secondDarkColor(double opacity) {
-    return Color(0xFFCCCCCC).withOpacity(opacity);
+    return Color.fromARGB(255, 104, 29, 29).withOpacity(opacity);
   }
 
   Color accentDarkColor(double opacity) {
-    return Color(0xFFCCCCCC).withOpacity(opacity);
+    return Color.fromARGB(255, 175, 31, 31).withOpacity(opacity);
   }
 
   Color scaffoldColor(double opacity) {
-    return Color(0xFFCCCCCC).withOpacity(opacity);
+    return Color.fromARGB(255, 109, 21, 21).withOpacity(opacity);
   }
 }

@@ -34,3 +34,4 @@ class TableBinding extends Bindings {
     );
   }
 }
+

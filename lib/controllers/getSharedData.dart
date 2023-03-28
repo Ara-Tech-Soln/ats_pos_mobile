@@ -4,6 +4,7 @@ import 'package:startupapplication/helpers/functions.dart';
 class GetSharedContoller extends GetxController {
   String? token;
   String? role;
+  String? ipUrl;
 
   var isLoading = true.obs;
   @override
@@ -20,6 +21,9 @@ class GetSharedContoller extends GetxController {
     });
     HelperFunctions.getStringValue('role').then((value) {
       role = value;
+    });
+    HelperFunctions.getStringValue('ipUrl').then((value) {
+      ipUrl = value;
     });
 
     isLoading(false);

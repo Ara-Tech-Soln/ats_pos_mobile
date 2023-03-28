@@ -2,25 +2,25 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:startupapplication/controllers/blank_screen_controller.dart';
 import 'package:startupapplication/controllers/getSharedData.dart';
-import 'package:startupapplication/controllers/splash_screen_controller.dart';
 import 'package:startupapplication/routes/app_pages.dart';
 
-class SplashScreen extends StatefulWidget {
+class BlankScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return SplashScreenState();
+    return BlankScreenState();
   }
 }
 
-class SplashScreenState extends State<SplashScreen> {
-  SplashScreenController controller = Get.put(SplashScreenController());
+class BlankScreenState extends State<BlankScreen> {
+  BlankScreenController controller = Get.put(BlankScreenController());
   GetSharedContoller getSharedContoller = Get.put(GetSharedContoller());
   @override
   @override
   void initState() {
     super.initState();
-    controller.getSettings();
+
     loadData();
   }
 
@@ -29,20 +29,10 @@ class SplashScreenState extends State<SplashScreen> {
 
     if (progress == 100) {
       try {
-        Timer(Duration(seconds: 2), () {
-          getSharedContoller.token == null
-              ? Get.offNamed(Routes.LOGIN)
-              : getSharedContoller.role == 'waiter'
-                  ? Get.toNamed(Routes.TABLE)
-                  : getSharedContoller.role == 'kitchen'
-                      ? Get.toNamed(Routes.KITCHEN_ORDER)
-                      : getSharedContoller.role == 'bar'
-                          ? Get.toNamed(Routes.BAR_ORDER)
-                          : controller.setting.value == "Card" &&
-                                  (getSharedContoller.role == 'manager' ||
-                                      getSharedContoller.role == 'cashier')
-                              ? Get.toNamed(Routes.CARD)
-                              : Get.toNamed(Routes.LOGIN);
+        Timer(Duration(seconds: 1), () {
+          getSharedContoller.ipUrl == null
+              ? Get.offNamed(Routes.WELCOME)
+              : Get.toNamed(Routes.LOGIN);
         });
       } catch (e) {
         print(e.toString());

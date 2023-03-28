@@ -183,7 +183,7 @@ class _CardDetailsViewState extends State<CardDetailsView> {
                       print(value);
                     });
                   },
-                  maxLength: 4,
+                  maxLines: 4,
                   keyboardType: TextInputType.text,
                   cursorColor: Theme.of(context).colorScheme.background,
                   decoration: InputDecoration(

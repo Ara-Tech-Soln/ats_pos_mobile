@@ -44,4 +44,5 @@ class TableController extends GetxController {
       isLoading(false);
     }
   }
+ 
 }

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:startupapplication/views/admin/card/views/card_details_view.dart';
+import 'package:startupapplication/views/blankScreen.dart';
+import 'package:startupapplication/welcomePage.dart';
 
 import '../views/admin/card/bindings/card_binding.dart';
 import '../views/admin/card/views/card_view.dart';
@@ -26,9 +28,17 @@ class AppPages {
   AppPages._();
 
   // ignore: constant_identifier_names
-  static const INITIAL = Routes.SPLASH;
+  static const INITIAL = Routes.BLANK;
 
   static final routes = [
+    GetPage(
+      name: _Paths.BLANK,
+      page: () => BlankScreen(),
+    ),
+    GetPage(
+      name: _Paths.WELCOME,
+      page: () => WelcomePage(),
+    ),
     GetPage(
       name: _Paths.SPLASH,
       page: () => SplashScreen(),

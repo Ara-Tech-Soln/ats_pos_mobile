@@ -2,7 +2,9 @@
 // import 'package:get/get.dart';
 import 'dart:convert';
 
+import 'package:get/get.dart';
 import 'package:startupapplication/controllers/ApiBaseController/baseController.dart';
+import 'package:startupapplication/controllers/getSharedData.dart';
 import 'package:startupapplication/helpers/functions.dart';
 import 'package:startupapplication/models/Accounts.dart';
 import 'package:startupapplication/models/AddCard.dart';
@@ -16,14 +18,28 @@ import 'package:startupapplication/models/User.dart';
 import 'package:startupapplication/services/base_client.dart';
 
 class ApiRequestController with BaseController {
+  GetSharedContoller getSharedContoller = Get.put(GetSharedContoller());
   //static String baseUrl = 'http://192.168.100.185'; //shadows ip
-  static String baseUrl = 'http://182.93.82.113'; //shadows ip
+  // static String baseUrl = 'http://182.93.82.113:8000'; //shadows ip
   // static String baseUrl = 'http://vusechho.com';
   // static String baseUrl = 'http://192.168.1.150';
   // static String baseUrl = 'http://192.168.1.65'; //niraj ip
-  //static String baseUrl = 'http://192.168.1.77'; //pankaj@niraj ip
+  late String baseUrl = getSharedContoller.ipUrl!; //pankaj@niraj ip
   static String verison = '/api/';
-  static String apiBaseUrl = baseUrl + verison;
+  late String apiBaseUrl = baseUrl + verison;
+
+  checkValidIp(ipUrl) async {
+    var endPoint = "settings";
+    var response = await BaseClient()
+        .get(apiBaseUrl, endPoint, null)
+        .catchError(handelError);
+
+    if (response == null) {
+      return;
+    } else {
+      return Setting.fromJson(response);
+    }
+  }
 
   getSettings() async {
     var endPoint = "settings";
