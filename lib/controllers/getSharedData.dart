@@ -5,6 +5,7 @@ class GetSharedContoller extends GetxController {
   String? token;
   String? role;
   String? ipUrl;
+  String? email;
 
   var isLoading = true.obs;
   @override
@@ -25,7 +26,9 @@ class GetSharedContoller extends GetxController {
     HelperFunctions.getStringValue('ipUrl').then((value) {
       ipUrl = value;
     });
-
+    HelperFunctions.getStringValue('email').then((value) {
+      email = value;
+    });
     isLoading(false);
   }
 }

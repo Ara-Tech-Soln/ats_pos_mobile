@@ -44,7 +44,7 @@ class _BarOrderViewState extends State<BarOrderView> {
             IconButton(
               onPressed: () async {
                 await HelperFunctions.clearAllValue();
-                Get.offNamed(Routes.LOGIN);
+                Get.offNamed(Routes.WELCOME);
               },
               icon: const Icon(Icons.logout),
             ),

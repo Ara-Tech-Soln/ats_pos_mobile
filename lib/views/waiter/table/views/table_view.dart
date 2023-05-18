@@ -43,18 +43,27 @@ class _TableViewState extends State<TableView> {
         appBar: AppBar(
           leading: Container(),
           backgroundColor: Theme.of(context).colorScheme.background,
-          title: const Text('ATS POS MOBILE'),
+          title: Column(
+            children: [
+              Text("Url:- " + getSharedController.ipUrl!),
+              Text("email:- " + getSharedController.email!)
+            ],
+          ),
           centerTitle: true,
           actions: [
             //qr code
-            settingController.setting.value == "Card"
-                ? IconButton(
-                    onPressed: () async {
-                      await qrController.scanQrBalance();
-                    },
-                    icon: const Icon(Icons.qr_code),
-                  )
-                : Container(),
+            Obx(
+              () => settingController.isLoading.value
+                  ? Container()
+                  : settingController.setting.value == "Card"
+                      ? IconButton(
+                          onPressed: () async {
+                            await qrController.scanQrBalance();
+                          },
+                          icon: const Icon(Icons.qr_code),
+                        )
+                      : Container(),
+            ),
             IconButton(
               icon: const Icon(Icons.refresh),
               onPressed: () {
@@ -63,9 +72,8 @@ class _TableViewState extends State<TableView> {
             ),
             IconButton(
               icon: const Icon(Icons.logout),
-              onPressed: () async {
-                await HelperFunctions.clearAllValue();
-                Get.offNamed(Routes.LOGIN);
+              onPressed: () {
+                showConfirmDialog();
               },
             ),
           ],
@@ -216,6 +224,36 @@ class _TableViewState extends State<TableView> {
                     Get.back();
                   },
                   child: const Text('Cancel')),
+            ],
+          );
+        });
+  }
+
+  showConfirmDialog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Sure do you want to logout?'),
+            content: Container(
+              width: 150,
+              height: 50,
+              color: Theme.of(context).primaryColor,
+            ),
+            //dropdown
+
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: const Text('Cancel')),
+              TextButton(
+                  onPressed: () async {
+                    await HelperFunctions.clearAllValue();
+                    Get.offAllNamed(Routes.WELCOME);
+                  },
+                  child: const Text('Logout')),
             ],
           );
         });

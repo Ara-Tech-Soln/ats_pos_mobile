@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:startupapplication/controllers/getSharedData.dart';
 import 'package:startupapplication/helpers/functions.dart';
+import 'package:startupapplication/routes/app_pages.dart';
 import 'package:startupapplication/views/animation.dart';
 import 'package:startupapplication/views/loadingWidget.dart';
 import 'package:startupapplication/views/login/controllers/login_controller.dart';
@@ -17,6 +19,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   LoginController loginController = Get.find();
+  GetSharedContoller getSharedContoller = Get.find();
   bool _obscureTextLogin = true;
   Future<bool> _willPopCallback() async {
     showExitDialog(context);
@@ -117,6 +120,14 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       SizedBox(
                         height: 15,
+                      ),
+                      Text(
+                        "Current IP Address: ${getSharedContoller.ipUrl}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.background,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700),
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 32),
@@ -256,6 +267,31 @@ class _LoginPageState extends State<LoginPage> {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18,
+                                      fontWeight: FontWeight.w700)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      //button for wrong ip address then go to ip address page
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: InkWell(
+                            onTap: (() async {
+                              await HelperFunctions.clearAllValue();
+                              Get.offAllNamed(Routes.WELCOME);
+                            }),
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 30,
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              decoration: HelperFunctions.gradientBtnDecoration,
+                              child: Text('Wrong IP Address?',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.w700)),
                             ),
                           ),

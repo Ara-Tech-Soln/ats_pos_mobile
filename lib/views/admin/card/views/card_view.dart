@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+// import 'package:qr_flutter/qr_flutter.dart';
 import 'package:startupapplication/controllers/qrController.dart';
 import 'package:startupapplication/helpers/functions.dart';
 import 'package:startupapplication/routes/app_pages.dart';
@@ -47,7 +47,7 @@ class _CardViewState extends State<CardView> {
               icon: const Icon(Icons.logout),
               onPressed: () async {
                 await HelperFunctions.clearAllValue();
-                Get.offNamed(Routes.LOGIN);
+                Get.offNamed(Routes.WELCOME);
               },
             ),
           ],
@@ -70,17 +70,17 @@ class _CardViewState extends State<CardView> {
                             tileColor: card.balance! > 0
                                 ? Colors.green[900]
                                 : Colors.red,
-                            leading: QrImage(
-                              foregroundColor: Colors.white,
-                              data: "MECARD:N:" +
-                                  card.address! +
-                                  card.name! +
-                                  ";ADR:" +
-                                  card.name! +
-                                  ";TEL:;EMAIL:;;",
-                              version: QrVersions.auto,
-                              size: 50.0,
-                            ),
+                            // leading: QrImage(
+                            //   foregroundColor: Colors.white,
+                            //   data: "MECARD:N:" +
+                            //       card.address! +
+                            //       card.name! +
+                            //       ";ADR:" +
+                            //       card.name! +
+                            //       ";TEL:;EMAIL:;;",
+                            //   version: QrVersions.auto,
+                            //   size: 50.0,
+                            // ),
                             title: Text(
                               card.name!.toUpperCase(),
                               style:

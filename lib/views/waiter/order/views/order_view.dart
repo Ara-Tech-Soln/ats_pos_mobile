@@ -56,7 +56,10 @@ class _OrderViewState extends State<OrderView> {
                         child: ListTile(
                           leading: ClipOval(
                             child: Image.network(
-                              orderController.orders[index].image!,
+                              //food png image from network
+                              'https://www.pngitem.com/pimgs/m/136-1366272_hot-food-bowl-svg-png-icon-free-bowl.png',
+
+                              //orderController.orders[index].image!,
                               height: 60,
                               width: 60,
                               fit: BoxFit.cover,

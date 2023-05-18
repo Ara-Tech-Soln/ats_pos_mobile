@@ -29,10 +29,10 @@ class ApiRequestController with BaseController {
   late String apiBaseUrl = baseUrl + verison;
 
   checkValidIp(ipUrl) async {
+    var url = ipUrl! + verison;
     var endPoint = "settings";
-    var response = await BaseClient()
-        .get(apiBaseUrl, endPoint, null)
-        .catchError(handelError);
+    var response =
+        await BaseClient().get(url, endPoint, null).catchError(handelError);
 
     if (response == null) {
       return;

@@ -67,12 +67,14 @@ class _WelcomePageState extends State<WelcomePage> {
                 }),
               ),
               onPressed: () async {
-                welcomeController.setIp();
+                await welcomeController.setIp();
               },
               child: Obx(() => Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: welcomeController.isLoading.value
-                        ? CircularProgressIndicator()
+                        ? CircularProgressIndicator(
+                            backgroundColor: Colors.red,
+                          )
                         : Text(
                             'Proceed',
                             style: TextStyle(color: Colors.white, fontSize: 20),

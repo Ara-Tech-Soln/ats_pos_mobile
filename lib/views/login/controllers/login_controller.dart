@@ -36,6 +36,8 @@ class LoginController extends GetxController {
         loginData = response;
         HelperFunctions.saveStringValue('token', loginData.apiToken);
         HelperFunctions.saveStringValue('role', loginData.roles.toString());
+        HelperFunctions.saveStringValue('email', loginData.email.toString());
+
         await updateDeviceToken();
         await getSharedContoller.sharedPreferenceData();
 

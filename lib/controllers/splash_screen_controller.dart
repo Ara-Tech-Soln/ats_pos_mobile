@@ -16,7 +16,7 @@ class SplashScreenController extends GetxController {
   @override
   void onInit() {
     progress.value["Setting"] = 100;
-
+    getSettings();
     super.onInit();
   }
 

@@ -49,4 +49,7 @@ class HelperFunctions {
           config.Colors().accentColor(.8),
         ],
       ));
+
+  static showConfirmDialog(
+      String s, BuildContext context, Future<Null> Function() param2) {}
 }

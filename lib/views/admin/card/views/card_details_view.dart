@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+// import 'package:qr_flutter/qr_flutter.dart';
 import 'package:startupapplication/helpers/functions.dart';
 import 'package:startupapplication/views/admin/card/controllers/card_controller.dart';
 
@@ -29,21 +29,21 @@ class _CardDetailsViewState extends State<CardDetailsView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              alignment: Alignment.center,
-              height: MediaQuery.of(context).size.height * 0.2,
-              width: MediaQuery.of(context).size.width * 0.5,
-              child: QrImage(
-                data: "MECARD:N:" +
-                    card.address! +
-                    card.name! +
-                    ";ADR:" +
-                    card.name! +
-                    ";TEL:;EMAIL:;;",
-                version: QrVersions.auto,
-                size: MediaQuery.of(context).size.width * 0.5,
-              ),
-            ),
+            // Container(
+            //   alignment: Alignment.center,
+            //   height: MediaQuery.of(context).size.height * 0.2,
+            //   width: MediaQuery.of(context).size.width * 0.5,
+            //   child: QrImage(
+            //     data: "MECARD:N:" +
+            //         card.address! +
+            //         card.name! +
+            //         ";ADR:" +
+            //         card.name! +
+            //         ";TEL:;EMAIL:;;",
+            //     version: QrVersions.auto,
+            //     size: MediaQuery.of(context).size.width * 0.5,
+            //   ),
+            // ),
             Text(
               'Current Balance: Rs. ' + card.balance.toString() + "/-",
               style: TextStyle(fontSize: 20),

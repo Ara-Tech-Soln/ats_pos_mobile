@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:startupapplication/controllers/ApiBaseController/apiRequestController.dart';
 import 'package:startupapplication/controllers/getSharedData.dart';
@@ -11,7 +10,7 @@ class WelcomeContoller extends GetxController {
 
   String? ipUrl;
 
-  var isLoading = true.obs;
+  var isLoading = false.obs;
 
   setIp() {
     try {
@@ -44,6 +43,7 @@ class WelcomeContoller extends GetxController {
     } catch (e) {
       print(e);
     } finally {
+      await getSharedContoller.sharedPreferenceData();
       isLoading(false);
     }
   }

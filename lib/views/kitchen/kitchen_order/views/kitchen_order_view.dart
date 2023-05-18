@@ -45,7 +45,7 @@ class _KitchenOrderViewState extends State<KitchenOrderView> {
             IconButton(
               onPressed: () async {
                 await HelperFunctions.clearAllValue();
-                Get.offNamed(Routes.LOGIN);
+                Get.offNamed(Routes.WELCOME);
               },
               icon: const Icon(Icons.logout),
             ),

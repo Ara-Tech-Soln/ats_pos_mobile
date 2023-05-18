@@ -463,6 +463,7 @@ class _MenuViewState extends State<MenuView> {
                                       crossAxisSpacing: 10,
                                       mainAxisSpacing: 10),
                               itemCount: menuController.menus.length,
+                              clipBehavior: Clip.antiAlias,
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                   onTap: () {
@@ -486,25 +487,26 @@ class _MenuViewState extends State<MenuView> {
                                     }
                                   },
                                   child: GridTile(
-                                    child: menuController.menus[index]!.image ==
-                                            ""
-                                        ? Image.network(
-                                            'https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg',
-                                            fit: BoxFit.cover,
-                                          )
-                                        : Image.network(
-                                            menuController.menus[index]!.image!,
-                                            fit: BoxFit.cover,
-                                          ),
-                                    footer: GridTileBar(
+                                    // child: menuController.menus[index]!.image ==
+                                    //         ""
+                                    //     ? Image.network(
+                                    //         'https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg',
+                                    //         fit: BoxFit.cover,
+                                    //       )
+                                    //     : Image.network(
+                                    //         menuController.menus[index]!.image!,
+                                    //         fit: BoxFit.cover,
+                                    //       ),
+                                    child: GridTileBar(
                                       title: Text(
                                         menuController.menus[index]!.name!,
                                         textAlign: TextAlign.center,
                                         softWrap: true,
                                         style: TextStyle(
-                                            overflow: TextOverflow.visible),
+                                          overflow: TextOverflow.fade,
+                                        ),
                                       ),
-                                      backgroundColor: Colors.black54,
+                                      backgroundColor: Colors.black38,
                                     ),
                                   ),
                                 );
